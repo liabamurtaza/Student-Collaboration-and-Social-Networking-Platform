@@ -1,0 +1,53 @@
+/* client/src/index.css */
+
+:root {
+  --navbar-height: 64px;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial,
+    'Noto Sans', 'Liberation Sans', sans-serif;
+  --font-display: var(--font-sans);
+
+  --color-bg: #f7f3ee;
+  --color-ink-dark: #1c1b1a;
+  --color-ink-mid: #4a4745;
+  --color-ink-light: #7a7571;
+  --color-border: rgba(28, 27, 26, 0.12);
+
+  --color-coral: #d85a30;
+  --color-coral-hover: #c94d25;
+
+  --radius-sm: 10px;
+  --radius-full: 999px;
+}
+
+/* Minimal reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-ink-dark);
+  background: var(--color-bg);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
