@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
+const auth = require('./middleware/auth');
+
 const app = express();
 
 // ── Middleware ──────────────────────────────────────────
@@ -16,7 +18,7 @@ app.use(express.json());
 // app.use('/api/posts', require('./routes/posts'));
 // routes (put this BEFORE 404)
 
-app.get("/test", (req, res) => {
+app.get("/test", auth, (req, res) => {
   res.json({ message: "API working" });
 });
 
@@ -32,12 +34,18 @@ app.use((err, req, res, next) => {
 });
 
 // ── Connect DB then start server ────────────────────────
-mongoose
-	.connect(process.env.MONGO_URI)
-	.then(() => {
-		console.log('MongoDB connected');
-		app.listen(process.env.PORT || 5000, () => {
-			console.log(`Server running on port ${process.env.PORT || 5000}`);
-		});
-	})
-	.catch((err) => console.error('MongoDB connection failed:', err));
+
+if (!process.env.MONGO_URI) {
+	console.error('MongoDB connection failed: MONGO_URI not set');
+	process.exit(1);
+} else {
+	mongoose
+		.connect(process.env.MONGO_URI)
+		.then(() => {
+			console.log('MongoDB connected');
+			app.listen(process.env.PORT || 5000, () => {
+				console.log(`Server running on port ${process.env.PORT || 5000}`);
+			});
+		})
+		.catch((err) => console.error('MongoDB connection failed:', err));
+}
