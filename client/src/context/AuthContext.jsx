@@ -1,13 +1,21 @@
-import { createContext, useState, useContext } from 'react'
+import { createContext, useState, useContext, useEffect } from 'react'
 
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
 
+  // On app load, check if token exists and set user
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      setUser({ token }) // minimal user object so ProtectedRoute lets us in
+    }
+  }, [])
+
   const login = (userData, token) => {
     localStorage.setItem('token', token)
-    setUser(userData)
+    setUser(userData || { token }) // fallback if no user object returned
   }
 
   const logout = () => {
