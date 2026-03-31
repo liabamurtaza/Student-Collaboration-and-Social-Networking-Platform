@@ -7,18 +7,17 @@ const User = require("../models/User");
 // REGISTER
 router.post("/register", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, username, email, password } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser)
       return res.status(400).json({ error: "User already exists" });
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     const user = new User({
       name,
+      username,
       email,
-      password: hashedPassword
+      password // The User model will handle hashing this in the pre('save') hook
     });
 
     await user.save();
