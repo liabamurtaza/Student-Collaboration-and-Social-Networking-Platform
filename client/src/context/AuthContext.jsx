@@ -4,19 +4,18 @@ const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
 
+  // On app load, check if token exists and set user
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
-      setUser({ token })
+      setUser({ token }) // minimal user object so ProtectedRoute lets us in
     }
-    setLoading(false)  // done checking, now ProtectedRoute can decide
   }, [])
 
   const login = (userData, token) => {
     localStorage.setItem('token', token)
-    setUser({ token })
+    setUser(userData || { token }) // fallback if no user object returned
   }
 
   const logout = () => {
@@ -25,7 +24,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   )
