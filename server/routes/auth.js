@@ -6,6 +6,7 @@ const User = require("../models/User");
 
 // REGISTER
 router.post("/register", async (req, res) => {
+    console.log("REGISTER ROUTE HIT");
   try {
     const { name, username, email, password } = req.body;
 
@@ -43,7 +44,7 @@ router.post("/login", async (req, res) => {
 
     const token = jwt.sign(
       { userId: user._id },
-      "SECRET_KEY",
+      process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
 
@@ -52,5 +53,5 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
+console.log("AUTH ROUTES LOADED");
 module.exports = router;
