@@ -1,0 +1,45 @@
+import { useState } from 'react'
+import { likePost } from '../api/posts'
+import { useAuth } from '../context/AuthContext'
+
+const LikeButton = ({ post, onLikeUpdate }) => {
+  const { user } = useAuth()
+  const [likes, setLikes] = useState(post.likes?.length || 0)
+  const [liked, setLiked] = useState(post.likes?.includes(user?.userId))
+  const [loading, setLoading] = useState(false)
+
+  const handleLike = async () => {
+    try {
+      setLoading(true)
+      const data = await likePost(post._id)
+      setLikes(data.likes)
+      setLiked(data.liked)
+      if (onLikeUpdate) onLikeUpdate(data)
+    } catch (err) {
+      console.error('Like failed:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <button
+      onClick={handleLike}
+      disabled={loading}
+      style={{
+        background: 'none',
+        border: 'none',
+        cursor: 'pointer',
+        fontSize: '1.2rem',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.3rem',
+        color: liked ? 'red' : '#666'
+      }}
+    >
+      {liked ? '❤️' : '🤍'} {likes}
+    </button>
+  )
+}
+
+export default LikeButton
