@@ -1,0 +1,330 @@
+/* ── Page layout ── */
+.feed-page {
+  min-height: 100vh;
+  background: #f0f2f5;
+}
+
+/* ── Navbar ── */
+.feed-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  z-index: 100;
+}
+
+.feed-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.feed-logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #378ADD;
+}
+
+.nav-link {
+  color: #444;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.nav-link:hover {
+  color: #378ADD;
+}
+
+.feed-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-btn {
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.nav-btn:hover {
+  background: #f5f5f5;
+}
+
+.nav-btn-logout {
+  background: #fff0f0;
+  border-color: #ffcccc;
+  color: #cc0000;
+}
+
+.nav-btn-logout:hover {
+  background: #ffe0e0;
+}
+
+/* ── Content area ── */
+.feed-container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 76px 1rem 2rem;
+  /* 76px top padding = 56px navbar + 20px gap */
+}
+
+/* ── Feed toggle (All Posts / My Feed) ── */
+.feed-toggle {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 0.35rem;
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #666;
+  transition: all 0.15s;
+}
+
+.toggle-btn.active {
+  background: #378ADD;
+  color: #fff;
+  font-weight: 500;
+}
+
+/* ── Create post card ── */
+.create-post-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.create-post-textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  resize: none;
+  font-size: 0.95rem;
+  font-family: inherit;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.create-post-textarea:focus {
+  border-color: #378ADD;
+}
+
+.create-post-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.6rem;
+}
+
+.char-count {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.btn-post {
+  padding: 0.45rem 1.4rem;
+  border-radius: 8px;
+  background: #378ADD;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.btn-post:hover:not(:disabled) {
+  background: #2a6fbb;
+}
+
+.btn-post:disabled {
+  background: #b0cfe8;
+  cursor: not-allowed;
+}
+
+/* ── Post card ── */
+.post-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.post-author {
+  font-size: 0.95rem;
+  color: #111;
+}
+
+.post-date {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.post-content {
+  font-size: 0.95rem;
+  color: #222;
+  line-height: 1.5;
+  margin: 0.4rem 0 0.75rem;
+}
+
+.post-edit-textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  resize: none;
+  font-size: 0.95rem;
+  font-family: inherit;
+  box-sizing: border-box;
+  outline: none;
+  margin-bottom: 0.5rem;
+}
+
+.post-edit-textarea:focus {
+  border-color: #378ADD;
+}
+
+.post-error {
+  color: #cc0000;
+  font-size: 0.85rem;
+  margin: 0.25rem 0;
+}
+
+/* ── Post footer (likes + actions) ── */
+.post-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.like-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #888;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+
+.like-btn:hover {
+  background: #fff0f0;
+  color: #e0425a;
+}
+
+.like-btn.liked {
+  color: #e0425a;
+  font-weight: 600;
+}
+
+/* ── Post action buttons ── */
+.post-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.btn-edit {
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.btn-edit:hover {
+  background: #f5f5f5;
+}
+
+.btn-delete {
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  border: none;
+  background: #ff4444;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.btn-delete:hover:not(:disabled) {
+  background: #cc0000;
+}
+
+.btn-save {
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  border: none;
+  background: #378ADD;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.btn-save:hover:not(:disabled) {
+  background: #2a6fbb;
+}
+
+.btn-cancel {
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.btn-cancel:hover {
+  background: #f5f5f5;
+}
+
+/* ── Status messages ── */
+.feed-status {
+  text-align: center;
+  padding: 2rem;
+  color: #888;
+  font-size: 0.95rem;
+}
+
+.feed-error {
+  color: #cc0000;
+}

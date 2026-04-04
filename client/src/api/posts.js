@@ -10,8 +10,8 @@ export const getPostById = async (postId) => {
   return response.data
 }
 
-export const createPost = async (caption) => {
-  const response = await api.post('/posts', { caption })
+export const createPost = async (content) => {
+  const response = await api.post('/posts', { content })
   return response.data
 }
 
