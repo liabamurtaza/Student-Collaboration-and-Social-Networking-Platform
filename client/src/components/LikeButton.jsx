@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { likePost } from '../api/posts'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/useAuth'
 
 const LikeButton = ({ post, onLikeUpdate }) => {
   const { user } = useAuth()

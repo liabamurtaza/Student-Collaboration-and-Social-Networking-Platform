@@ -1,12 +1,20 @@
 const express = require('express')
 const router = express.Router()
+const mongoose = require('mongoose')
 const User = require('../models/User')
 const auth = require('../middleware/auth')
 
-// GET /api/users/:id — get any user's profile
-router.get('/:id', async (req, res) => {
+const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id)
+
+// GET /api/users/:identifier — get any user's profile by id or username
+router.get('/:identifier', async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select('-password')
+    const { identifier } = req.params
+
+    const user = isValidObjectId(identifier)
+      ? await User.findById(identifier).select('-password')
+      : await User.findOne({ username: identifier }).select('-password')
+
     if (!user) return res.status(404).json({ error: 'User not found' })
     res.json(user)
   } catch (err) {
@@ -17,6 +25,10 @@ router.get('/:id', async (req, res) => {
 // PUT /api/users/:id — update own profile (protected)
 router.put('/:id', auth, async (req, res) => {
   try {
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ error: 'Invalid user id' })
+    }
+
     console.log('req.user:', req.user)
     console.log('req.params.id:', req.params.id)
     if (req.user.userId !== req.params.id)
@@ -40,6 +52,10 @@ router.put('/:id', auth, async (req, res) => {
 // PUT /api/users/:id/follow — follow a user (protected)
 router.put('/:id/follow', auth, async (req, res) => {
   try {
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ error: 'Invalid user id' })
+    }
+
     if (req.user.userId === req.params.id)
       return res.status(400).json({ error: "You can't follow yourself" })
 
@@ -61,6 +77,10 @@ router.put('/:id/follow', auth, async (req, res) => {
 // PUT /api/users/:id/unfollow — unfollow a user (protected)
 router.put('/:id/unfollow', auth, async (req, res) => {
   try {
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ error: 'Invalid user id' })
+    }
+
     if (req.user.userId === req.params.id)
       return res.status(400).json({ error: "You can't unfollow yourself" })
 

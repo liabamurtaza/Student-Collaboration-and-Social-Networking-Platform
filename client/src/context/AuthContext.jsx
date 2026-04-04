@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from 'react'
+import { createContext, useState } from 'react'
 
 const AuthContext = createContext()
 
@@ -7,13 +7,6 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token')
     return token ? { token } : null
   })
-
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-    if (!token && user) {
-      setUser(null)
-    }
-  }, [user])
 
   const login = (userData, token) => {
     localStorage.setItem('token', token)
@@ -32,5 +25,4 @@ export const AuthProvider = ({ children }) => {
   )
 }
 
-export const useAuth = () => useContext(AuthContext)
 export default AuthContext
