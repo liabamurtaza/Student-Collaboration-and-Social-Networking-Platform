@@ -22,6 +22,11 @@ const uploadToCloudinary = (file) => {
   })
 }
 
+const postPopulateOptions = [
+  { path: 'userId', select: 'name username' },
+  { path: 'comments.userId', select: 'name username' }
+]
+
 const maybeUploadImage = (req, res, next) => {
   if (req.is('multipart/form-data')) {
     return upload.single('image')(req, res, next)
@@ -35,9 +40,7 @@ router.get('/', async (req, res) => {
   try {
     const posts = await Post.find()
       .sort({ createdAt: -1 })
-      .populate('userId', 'name username')
-    // .populate means: instead of just storing the user's ID,
-    // go fetch their name and username from the Users collection too
+      .populate(postPopulateOptions)
     res.json(posts)
   } catch (err) {
     res.status(500).json({ error: err.message })
@@ -53,7 +56,7 @@ router.get('/feed', auth, async (req, res) => {
 
     const posts = await Post.find({ userId: { $in: followingIds } })
       .sort({ createdAt: -1 })
-      .populate('userId', 'name username')
+      .populate(postPopulateOptions)
 
     res.json(posts)
   } catch (err) {
@@ -71,7 +74,7 @@ router.get('/user/:userId', async (req, res) => {
 
     const posts = await Post.find({ userId })
       .sort({ createdAt: -1 })
-      .populate('userId', 'name username')
+      .populate(postPopulateOptions)
 
     res.json(posts)
   } catch (err) {
@@ -105,7 +108,7 @@ router.post('/', auth, maybeUploadImage, async (req, res) => {
     await post.save()
 
     // populate before sending back so PostCard gets the author name immediately
-    await post.populate('userId', 'name username')
+    await post.populate(postPopulateOptions)
     res.status(201).json(post)
   } catch (err) {
     res.status(500).json({ error: err.message })
@@ -129,9 +132,35 @@ router.put('/:id', auth, async (req, res) => {
 
     post.content = content.trim()
     await post.save()
-    await post.populate('userId', 'name username')
+    await post.populate(postPopulateOptions)
 
     res.json(post)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
+// POST /api/posts/:id/comments — add a comment to a post
+router.post('/:id/comments', auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id)
+    if (!post) return res.status(404).json({ error: 'Post not found' })
+
+    const body = req.body || {}
+    const content = body.content?.trim()
+    if (!content) {
+      return res.status(400).json({ error: 'Comment content is required' })
+    }
+
+    post.comments.push({
+      userId: req.user.userId,
+      content
+    })
+
+    await post.save()
+    await post.populate(postPopulateOptions)
+
+    res.status(201).json(post)
   } catch (err) {
     res.status(500).json({ error: err.message })
   }

@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import api from '../api/index'
 import { likePost } from '../api/posts'
+import CommentSection from './CommentSection'
 
 const PostCard = ({ post, currentUserId, onDelete, onUpdate }) => {
   const [editing, setEditing] = useState(false)
   const [editContent, setEditContent] = useState(post.content)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [comments, setComments] = useState(post.comments || [])
 
   // like state — start from what the database already has
   const [likesCount, setLikesCount] = useState(post.likes?.length || 0)
@@ -106,6 +108,13 @@ const PostCard = ({ post, currentUserId, onDelete, onUpdate }) => {
       )}
 
       {error && <p className="post-error">{error}</p>}
+
+      <CommentSection
+        postId={post._id}
+        currentUserId={currentUserId}
+        comments={comments}
+        onCommentAdded={setComments}
+      />
 
       {/* Bottom row */}
       <div className="post-footer">
