@@ -26,6 +26,14 @@ function Navbar() {
 					>
 						Profile
 					</NavLink>
+					<NavLink
+						to="/messages"
+						className={({ isActive }) =>
+							`navbar__link${isActive ? ' navbar__link--active' : ''}`
+						}
+					>
+						Messages
+					</NavLink>
 				</nav>
 
 				<div className="navbar__auth">

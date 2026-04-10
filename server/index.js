@@ -2,11 +2,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const http = require('http');
 require('dotenv').config({ path: require('path').join(__dirname, '.env') });
 
 const auth = require('./middleware/auth');
+const { initSocket } = require('./socket');
 
 const app = express();
+const server = http.createServer(app);
 
 // ── Middleware ──────────────────────────────────────────
 app.use(cors());
@@ -18,6 +21,8 @@ const userRoutes = require('./routes/users')
 app.use('/api/users', userRoutes)
 // app.use('/api/users', require('./routes/users'));
 app.use('/api/posts', require('./routes/posts'));
+app.use('/api/conversations', require('./routes/conversations'));
+app.use('/api/messages', require('./routes/messages'));
 // routes (put this BEFORE 404)
 
 app.get("/test", auth, (req, res) => {
@@ -45,8 +50,9 @@ if (!process.env.MONGO_URI) {
 		.connect(process.env.MONGO_URI)
 		.then(() => {
 			console.log('MongoDB connected');
-			app.listen(process.env.PORT || 5000, () => {
-				console.log(`Server running on port ${process.env.PORT || 5000}`);
+			initSocket(server);
+			server.listen(process.env.PORT || 5001, () => {
+				console.log(`Server running on port ${process.env.PORT || 5001}`);
 			});
 		})
 		.catch((err) => console.error('MongoDB connection failed:', err));

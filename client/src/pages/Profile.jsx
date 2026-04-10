@@ -229,6 +229,11 @@ const Profile = () => {
     }
   }
 
+  const handleMessageClick = () => {
+    if (!targetUserId) return
+    navigate(`/messages/${targetUserId}`)
+  }
+
   if (loading) {
     return (
       <div className="feed-page">
@@ -236,7 +241,7 @@ const Profile = () => {
           <div className="feed-nav-left">
             <span className="feed-logo">StudentNet</span>
             <Link to="/feed" className="nav-link">Feed</Link>
-            <Link to="/explore" className="nav-link">Explore</Link>
+            <Link to="/explore" className="nav-link">Search</Link>
           </div>
           <div className="feed-nav-right">
             <button onClick={handleProfileClick} disabled={!currentUserId} className="nav-btn">
@@ -261,7 +266,8 @@ const Profile = () => {
           <span className="feed-logo">StudentNet</span>
           <Link to="/create-post" className="nav-link">Create Post</Link>
           <Link to="/feed" className="nav-link">Feed</Link>
-          <Link to="/explore" className="nav-link">Explore</Link>
+          <Link to="/explore" className="nav-link">Search</Link>
+          <Link to="/messages" className="nav-link">Messages</Link>
         </div>
         <div className="feed-nav-right">
           <button onClick={handleProfileClick} disabled={!currentUserId} className="nav-btn">
@@ -364,12 +370,20 @@ const Profile = () => {
                       <Link to="/login" className="profile-link">Login</Link> to follow this user.
                     </p>
                   ) : (
-                    <FollowButton
-                      isFollowing={isFollowing}
-                      isLoggedIn={isLoggedIn}
-                      followLoading={followLoading}
-                      onToggle={handleFollowToggle}
-                    />
+                    <>
+                      <FollowButton
+                        isFollowing={isFollowing}
+                        isLoggedIn={isLoggedIn}
+                        followLoading={followLoading}
+                        onToggle={handleFollowToggle}
+                      />
+                      <button
+                        onClick={handleMessageClick}
+                        className="profile-btn profile-btn-message profile-btn-block"
+                      >
+                        Message
+                      </button>
+                    </>
                   )}
                   <button onClick={fetchProfile} className="profile-btn profile-btn-secondary profile-btn-block">
                     Refresh

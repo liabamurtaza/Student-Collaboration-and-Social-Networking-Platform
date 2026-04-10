@@ -65,6 +65,34 @@ router.get('/suggestions', auth, async (req, res) => {
   }
 })
 
+// GET /api/users/search?q=term — search users by username/name
+router.get('/search', auth, async (req, res) => {
+  try {
+    const q = String(req.query.q || '').trim()
+
+    if (!q) {
+      return res.json([])
+    }
+
+    const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const regex = new RegExp(escaped, 'i')
+
+    const users = await User.find({
+      _id: { $ne: req.user.userId },
+      $or: [
+        { username: regex },
+        { name: regex }
+      ]
+    })
+      .select('name username avatar bio followers following')
+      .limit(20)
+
+    res.json(users)
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' })
+  }
+})
+
 // GET /api/users/:identifier — get any user's profile by id or username
 router.get('/:identifier', async (req, res) => {
   try {

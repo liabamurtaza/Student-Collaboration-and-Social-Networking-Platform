@@ -128,7 +128,8 @@ const CreatePostPage = () => {
         <div className="feed-nav-left">
           <span className="feed-logo">StudentNet</span>
           <Link to="/feed" className="nav-link">Feed</Link>
-          <Link to="/explore" className="nav-link">Explore</Link>
+          <Link to="/explore" className="nav-link">Search</Link>
+          <Link to="/messages" className="nav-link">Messages</Link>
         </div>
         <div className="feed-nav-right">
           <button onClick={handleLogout} className="nav-btn nav-btn-logout">

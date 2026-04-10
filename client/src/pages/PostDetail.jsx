@@ -109,6 +109,7 @@ const PostDetail = () => {
           <span className="feed-logo">StudentNet</span>
           <Link to="/feed" className="nav-link">Feed</Link>
           <Link to="/create-post" className="nav-link">Create Post</Link>
+          <Link to="/messages" className="nav-link">Messages</Link>
         </div>
         <div className="feed-nav-right">
           <button onClick={handleLogout} className="nav-btn nav-btn-logout">

@@ -146,6 +146,16 @@
 	background: #f5f5f5;
 }
 
+.profile-btn-message {
+	background: #f8fbff;
+	border-color: #cfe0f5;
+	color: #2a6fbb;
+}
+
+.profile-btn-message:hover:not(:disabled) {
+	background: #edf5ff;
+}
+
 .profile-btn-block {
 	width: 100%;
 	margin-top: 0.5rem;
