@@ -304,6 +304,50 @@ const Profile = () => {
           <div className="feed-status feed-error">{error || 'User not found'}</div>
         ) : (
           <div className="profile-shell">
+            <div className="profile-floating" aria-hidden="true">
+              <span
+                className="profile-key profile-key-left"
+                style={{ '--rot': '-10deg', '--delay': '0s', top: '10%', background: '#f4845f' }}
+              >
+                P
+              </span>
+              <span
+                className="profile-key profile-key-left"
+                style={{ '--rot': '8deg', '--delay': '0.35s', top: '38%', background: '#f6c94e' }}
+              >
+                R
+              </span>
+              <span
+                className="profile-key profile-key-left"
+                style={{ '--rot': '-6deg', '--delay': '0.55s', top: '66%', background: '#7bd9c7' }}
+              >
+                O
+              </span>
+              <span
+                className="profile-key profile-key-right"
+                style={{ '--rot': '12deg', '--delay': '0.6s', top: '12%', background: '#49c4a0' }}
+              >
+                F
+              </span>
+              <span
+                className="profile-key profile-key-right"
+                style={{ '--rot': '-8deg', '--delay': '0.8s', top: '40%', background: '#f28f6b' }}
+              >
+                I
+              </span>
+              <span
+                className="profile-key profile-key-right"
+                style={{ '--rot': '6deg', '--delay': '1s', top: '68%', background: '#f6c94e' }}
+              >
+                L
+              </span>
+              <span
+                className="profile-key profile-key-right"
+                style={{ '--rot': '10deg', '--delay': '1.2s', top: '86%', background: '#9ad28f' }}
+              >
+                E
+              </span>
+            </div>
             <section className="profile-hero">
               <div className="profile-hero-main">
                 <span className="profile-badge">Profile Space</span>

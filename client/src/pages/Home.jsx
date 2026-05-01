@@ -60,7 +60,7 @@ const Home = () => {
         <main className="home-shell">
           <section className="home-hero">
             <div className="home-badge">Student Collaboration Platform</div>
-            <h1>StudentNet</h1>
+            <h1>UNIVERSE</h1>
             <p className="home-lead">
               A lightweight campus network for posts, messages, and class connections.
               Jump into the feed, explore classmates, and build your campus presence.

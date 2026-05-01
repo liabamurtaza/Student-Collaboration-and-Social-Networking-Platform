@@ -10,6 +10,7 @@
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --dark-filter: invert(1) hue-rotate(180deg) saturate(0.92) brightness(0.94) contrast(0.96);
 
   --sans: 'Trebuchet MS', 'Segoe UI', 'Avenir Next', sans-serif;
   --heading: 'Trebuchet MS', 'Segoe UI', 'Avenir Next', sans-serif;
@@ -30,17 +31,65 @@
   }
 }
 
+:root[data-studentnet-theme="dark"] {
+  color-scheme: dark;
+}
+
+:root[data-studentnet-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-studentnet-theme="dark"] #root {
+  filter: var(--dark-filter);
+  background: var(--bg);
+}
+
+:root[data-studentnet-theme="dark"] img,
+:root[data-studentnet-theme="dark"] video,
+:root[data-studentnet-theme="dark"] iframe,
+:root[data-studentnet-theme="dark"] canvas,
+:root[data-studentnet-theme="dark"] svg {
+  filter: var(--dark-filter);
+}
+
+:root[data-studentnet-theme="dark"] body {
+  background: #0f1216;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-studentnet-theme="system"] {
+    color-scheme: dark;
+  }
+
+  :root[data-studentnet-theme="system"] #root {
+    filter: var(--dark-filter);
+    background: var(--bg);
+  }
+
+  :root[data-studentnet-theme="system"] img,
+  :root[data-studentnet-theme="system"] video,
+  :root[data-studentnet-theme="system"] iframe,
+  :root[data-studentnet-theme="system"] canvas,
+  :root[data-studentnet-theme="system"] svg {
+    filter: var(--dark-filter);
+  }
+
+  :root[data-studentnet-theme="system"] body {
+    background: #0f1216;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
+    --text: #aab4c3;
+    --text-h: #f4f6fb;
+    --bg: #12161d;
+    --border: #27303b;
+    --code-bg: #1b222d;
+    --accent: #7bd9c7;
+    --accent-bg: rgba(123, 217, 199, 0.15);
+    --accent-border: rgba(123, 217, 199, 0.45);
+    --social-bg: rgba(33, 41, 52, 0.6);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
   }
