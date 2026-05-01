@@ -70,8 +70,8 @@ const Profile = () => {
       setProfile(res.data)
       setBio(res.data.bio || '')
       setName(res.data.name || '')
-    } catch {
-      setError('User not found')
+    } catch (err) {
+      setError(err.response?.data?.error || 'User not found')
     } finally {
       setLoading(false)
     }

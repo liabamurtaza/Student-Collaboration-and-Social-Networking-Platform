@@ -12,6 +12,29 @@ const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id)
 const ensureParticipant = (conversation, userId) =>
   conversation.participants.some((participantId) => participantId.toString() === userId)
 
+router.get('/unread-count', auth, async (req, res) => {
+  try {
+    const userId = req.user.userId
+
+    const conversations = await Conversation.find({ participants: userId }).select('_id')
+    if (!conversations.length) {
+      return res.json({ count: 0 })
+    }
+
+    const conversationIds = conversations.map((conversation) => conversation._id)
+
+    const count = await Message.countDocuments({
+      conversationId: { $in: conversationIds },
+      senderId: { $ne: userId },
+      readBy: { $ne: userId }
+    })
+
+    res.json({ count })
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' })
+  }
+})
+
 router.post('/', auth, async (req, res) => {
   try {
     const { conversationId, content, attachments = [] } = req.body || {}

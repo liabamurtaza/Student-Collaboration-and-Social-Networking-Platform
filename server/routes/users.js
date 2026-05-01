@@ -5,8 +5,27 @@ const multer = require('multer')
 const cloudinary = require('../config/cloudinary')
 const User = require('../models/User')
 const auth = require('../middleware/auth')
+const jwt = require('jsonwebtoken')
 
 const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id)
+
+const getRequestUserId = (req) => {
+  const header = req.headers.authorization
+  if (!header) return null
+
+  const [scheme, token] = header.split(' ')
+  if (scheme !== 'Bearer' || !token) return null
+
+  const secret = process.env.JWT_SECRET
+  if (!secret) return null
+
+  try {
+    const payload = jwt.verify(token, secret)
+    return payload?.userId || null
+  } catch {
+    return null
+  }
+}
 
 const avatarUpload = multer({
   storage: multer.memoryStorage(),
@@ -79,9 +98,11 @@ router.get('/search', auth, async (req, res) => {
 
     const users = await User.find({
       _id: { $ne: req.user.userId },
+      profileVisible: { $ne: false },
       $or: [
         { username: regex },
-        { name: regex }
+        { name: regex },
+        { email: regex, searchableByEmail: true }
       ]
     })
       .select('name username avatar bio followers following')
@@ -103,6 +124,11 @@ router.get('/:identifier', async (req, res) => {
       : await User.findOne({ username: identifier }).select('-password')
 
     if (!user) return res.status(404).json({ error: 'User not found' })
+
+    const requesterId = getRequestUserId(req)
+    if (user.profileVisible === false && requesterId !== user._id.toString()) {
+      return res.status(403).json({ error: 'Profile is private' })
+    }
     res.json(user)
   } catch (err) {
     res.status(500).json({ error: 'Server error' })
@@ -190,11 +216,20 @@ router.put('/:id', auth, async (req, res) => {
     if (req.user.userId !== req.params.id)
       return res.status(403).json({ error: 'You can only edit your own profile' })
 
-    const { name, bio } = req.body
+    const { name, bio, profileVisible, searchableByEmail } = req.body
     console.log('Updating user...')
+    const updates = {}
+    if (typeof name === 'string') updates.name = name
+    if (typeof bio === 'string') updates.bio = bio
+    if (typeof profileVisible === 'boolean') updates.profileVisible = profileVisible
+    if (typeof searchableByEmail === 'boolean') updates.searchableByEmail = searchableByEmail
+
+    if (!Object.keys(updates).length) {
+      return res.status(400).json({ error: 'No valid fields to update' })
+    }
     const user = await User.findByIdAndUpdate(
       req.params.id,
-      { name, bio },
+      updates,
       { returnDocument: 'after' }
     ).select('-password')
     console.log('Updated user:', user)

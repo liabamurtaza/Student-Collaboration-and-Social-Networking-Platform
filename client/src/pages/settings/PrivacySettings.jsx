@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import SettingsLayout from './SettingsLayout'
+import api from '../../api'
 
 const STORAGE_KEY = 'studentnet-settings-privacy'
 
@@ -22,14 +23,99 @@ const readPrivacy = () => {
 const PrivacySettings = () => {
   const [settings, setSettings] = useState(readPrivacy)
   const [saved, setSaved] = useState(false)
+  const [saveError, setSaveError] = useState('')
+  const [serverReady, setServerReady] = useState(false)
+
+  const currentUserId = useMemo(() => {
+    const token = localStorage.getItem('token')
+    if (!token) return null
+    try {
+      return JSON.parse(atob(token.split('.')[1])).userId || null
+    } catch {
+      return null
+    }
+  }, [])
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings))
-    setSaved(true)
 
-    const timeout = window.setTimeout(() => setSaved(false), 1200)
-    return () => window.clearTimeout(timeout)
-  }, [settings])
+    if (!currentUserId) {
+      setSaved(true)
+      const timeout = window.setTimeout(() => setSaved(false), 1200)
+      return () => window.clearTimeout(timeout)
+    }
+
+    return undefined
+  }, [settings, currentUserId])
+
+  useEffect(() => {
+    if (!currentUserId) {
+      setServerReady(true)
+      return undefined
+    }
+
+    let active = true
+
+    const loadPrivacy = async () => {
+      try {
+        const res = await api.get(`/users/${currentUserId}`)
+        if (!active) return
+        setSettings((prev) => ({
+          ...prev,
+          profileVisible: res.data.profileVisible ?? true,
+          searchableByEmail: res.data.searchableByEmail ?? false
+        }))
+      } catch {
+        if (active) {
+          setSaveError('Unable to load privacy settings.')
+        }
+      } finally {
+        if (active) {
+          setServerReady(true)
+        }
+      }
+    }
+
+    loadPrivacy()
+
+    return () => {
+      active = false
+    }
+  }, [currentUserId])
+
+  useEffect(() => {
+    if (!currentUserId || !serverReady) return undefined
+
+    let active = true
+    let timeoutId
+
+    const savePrivacy = async () => {
+      try {
+        setSaveError('')
+        await api.put(`/users/${currentUserId}`, {
+          profileVisible: settings.profileVisible,
+          searchableByEmail: settings.searchableByEmail
+        })
+
+        if (!active) return
+        setSaved(true)
+        timeoutId = window.setTimeout(() => {
+          if (active) setSaved(false)
+        }, 1200)
+      } catch {
+        if (active) {
+          setSaveError('Unable to save privacy settings.')
+        }
+      }
+    }
+
+    savePrivacy()
+
+    return () => {
+      active = false
+      if (timeoutId) window.clearTimeout(timeoutId)
+    }
+  }, [currentUserId, serverReady, settings.profileVisible, settings.searchableByEmail])
 
   const toggleSetting = (key) => {
     setSettings((prev) => ({ ...prev, [key]: !prev[key] }))
@@ -73,11 +159,14 @@ const PrivacySettings = () => {
         .ps-switch.is-on { background:#43a047; border-color:#1a4a1a; }
         .ps-switch.is-on::after { transform: translateX(18px); }
         .ps-status { margin:0; color:#1a4a1a; font-weight:800; font-size:0.85rem; }
+        .ps-error { margin:0; color:#b42318; font-weight:800; font-size:0.85rem; }
       `}</style>
 
       <div style={s.card}>
         <span style={s.cardIcon}>🛡️</span>
         <h3 style={s.cardTitle}>Privacy controls</h3>
+        {saved && <p className="ps-status">Saved</p>}
+        {saveError && <p className="ps-error">{saveError}</p>}
 
         <div className="ps-toggle-row">
           <div className="ps-toggle-copy">

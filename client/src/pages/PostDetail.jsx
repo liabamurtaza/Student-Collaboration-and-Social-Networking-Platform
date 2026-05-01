@@ -8,6 +8,35 @@ import PostLikesModal from '../components/PostLikesModal'
 import './Feed.css'
 import './PostDetail.css'
 
+const s = {
+  nav: {
+    position: 'fixed', top: 0, left: 0, right: 0, height: 60,
+    background: '#d4e6a5', borderBottom: '2.5px solid #b5cc7a',
+    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+    padding: '0 36px', zIndex: 100,
+  },
+  navLeft: { display: 'flex', alignItems: 'center', gap: 4 },
+  navRight: { display: 'flex', alignItems: 'center', gap: 8 },
+  logo: {
+    fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 900,
+    fontSize: '1.35rem', color: '#1a4a1a', textDecoration: 'none', marginRight: 14,
+  },
+  navA: {
+    textDecoration: 'none', fontWeight: 700, fontSize: '0.92rem',
+    color: '#1a4a1a', padding: '6px 14px', fontFamily: "'Nunito', sans-serif",
+  },
+  btnOutline: {
+    fontWeight: 700, fontSize: '0.88rem', color: '#1a4a1a', padding: '7px 18px',
+    border: '2px solid #1a4a1a', borderRadius: 999, background: 'none',
+    cursor: 'pointer', fontFamily: "'Nunito', sans-serif",
+  },
+  btnFill: {
+    fontWeight: 700, fontSize: '0.88rem', color: '#fff', padding: '8px 20px',
+    background: '#1a4a1a', border: 'none', borderRadius: 999,
+    cursor: 'pointer', fontFamily: "'Nunito', sans-serif",
+  },
+}
+
 const PostDetail = () => {
   const navigate = useNavigate()
   const { id } = useParams()
@@ -108,24 +137,38 @@ const PostDetail = () => {
   }
 
   return (
-    <div className="post-detail-page">
-      <nav className="feed-nav">
-        <div className="feed-nav-left">
-          <span className="feed-logo">StudentNet</span>
-          <Link to="/feed" className="nav-link">Feed</Link>
-          <Link to="/societies" className="nav-link">Societies</Link>
-          <Link to="/create-post" className="nav-link">Create Post</Link>
-          <Link to="/messages" className="nav-link">Messages</Link>
-          <Link to="/settings" className="nav-link">Settings</Link>
+    <div className="feed-page">
+      <nav style={s.nav}>
+        <div style={s.navLeft}>
+          <Link to="/" style={s.logo}>★ UNIVERSE</Link>
+          <Link to="/Feed" style={s.navA}>Feed</Link>
+          <Link to="/create-post" style={s.navA}>Create Post</Link>
+          <Link to="/societies" style={s.navA}>Societies</Link>
+          <Link to="/explore" style={s.navA}>Explore</Link>
+          <Link to="/messages" style={s.navA}>Messages</Link>
+          <Link to="/settings" style={s.navA}>Settings</Link>
+          <Link to="/about" style={s.navA}>About</Link>
+          <Link to="/contact" style={s.navA}>Contact</Link>
         </div>
-        <div className="feed-nav-right">
-          <button onClick={handleLogout} className="nav-btn nav-btn-logout">
-            Logout
+        <div style={s.navRight}>
+          <button
+            onClick={() => navigate(`/profile/${currentUserId}`)}
+            disabled={!currentUserId}
+            style={s.btnOutline}
+          >
+            Profile
           </button>
+          <button onClick={handleLogout} style={s.btnFill}>Logout</button>
         </div>
       </nav>
 
-      <div className="post-detail-shell">
+      <div className="feed-container post-detail-shell">
+        <div className="post-detail-floating" aria-hidden="true">
+          <span className="post-detail-key" style={{ '--rot': '-10deg', '--delay': '0s', left: '-18%', top: '18%', background: '#f4845f' }}>P</span>
+          <span className="post-detail-key" style={{ '--rot': '8deg', '--delay': '0.3s', left: '-18%', top: '58%', background: '#f6c94e' }}>O</span>
+          <span className="post-detail-key" style={{ '--rot': '12deg', '--delay': '0.5s', right: '-18%', top: '22%', background: '#49c4a0' }}>S</span>
+          <span className="post-detail-key" style={{ '--rot': '-6deg', '--delay': '0.7s', right: '-18%', top: '62%', background: '#7bd9c7' }}>T</span>
+        </div>
         {loading && <div className="feed-status">Loading post...</div>}
         {error && <div className="feed-status feed-error">{error}</div>}
 

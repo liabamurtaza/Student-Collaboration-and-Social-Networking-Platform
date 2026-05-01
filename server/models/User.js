@@ -45,6 +45,8 @@ const userSchema = new mongoose.Schema({
   bio: { type: String, default: '' },
   avatar: { type: String, default: '' },
   avatarPublicId: { type: String, default: '' },
+  profileVisible: { type: Boolean, default: true },
+  searchableByEmail: { type: Boolean, default: false },
   followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   followedSocieties: { type: [followedSocietySchema], default: [] },
