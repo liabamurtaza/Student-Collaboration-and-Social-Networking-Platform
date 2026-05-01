@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../../context/useAuth'
 import {
@@ -10,7 +10,6 @@ import {
   joinSociety,
   leaveSociety,
   postToSociety,
-  removeSocietySectionMember,
   updateSociety,
   unfollowSociety
 } from '../../api/societies'
@@ -101,7 +100,7 @@ const SocietyDetail = () => {
     }))
   }
 
-  const loadDetail = async (sectionId = selectedSectionId) => {
+  const loadDetail = useCallback(async (sectionId = selectedSectionId) => {
     try {
       setLoading(true); setError('')
       const [detail, postList] = await Promise.all([
@@ -119,7 +118,7 @@ const SocietyDetail = () => {
       const apiError = err.response?.data?.error || 'Failed to load society'
       setError(apiError === 'You are banned from this society' ? apiError : 'Failed to load society')
     } finally { setLoading(false) }
-  }
+  }, [identifier, selectedSectionId])
 
   const handleJoin = async () => {
     if (isMember) return
@@ -213,7 +212,7 @@ const SocietyDetail = () => {
     finally { setAssigningMember(false) }
   }
 
-  useEffect(() => { loadDetail('') }, [identifier])
+  useEffect(() => { loadDetail('') }, [loadDetail])
 
   const handleLogout = () => { logout(); navigate('/login', { replace: true }) }
 
@@ -254,9 +253,11 @@ const SocietyDetail = () => {
       cursor: 'pointer', fontFamily: "'Nunito', sans-serif",
     },
     body: {
-      flex: 1,
+      flex: 1, position: 'relative',
       padding: '80px 20px 48px',
-      maxWidth: 860, margin: '0 auto', width: '100%', boxSizing: 'border-box',
+    },
+    shell: {
+      maxWidth: 860, margin: '0 auto', width: '100%', boxSizing: 'border-box', position: 'relative', zIndex: 5,
     },
     footer: {
       textAlign: 'center', padding: 18, fontSize: '0.82rem',
@@ -405,16 +406,14 @@ const SocietyDetail = () => {
           </div>
         </nav>
 
-        {/* Floating keys spell V-I-E-W */}
-        <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 1 }}>
-          <Key letter="V" color="#f4845f" style={{ left: '1.5%', top: '20%',  '--rot': '-8deg' }} />
-          <Key letter="I" color="#f6c94e" style={{ left: '3%',   top: '50%',  '--rot': '6deg',  animationDelay: '0.5s' }} />
-          <Key letter="E" color="#49c4a0" style={{ right: '3%',  top: '20%',  '--rot': '9deg',  animationDelay: '0.3s' }} />
-          <Key letter="W" color="#a78bfa" style={{ right: '1.5%',top: '50%',  '--rot': '-7deg', animationDelay: '0.8s' }} />
-        </div>
-
         {/* BODY */}
         <div style={s.body}>
+          {/* Floating keys spell V-I-E-W */}
+          <Key letter="V" color="#f4845f" style={{ left: '1.5%', top: '12%',  '--rot': '-8deg' }} />
+          <Key letter="I" color="#f6c94e" style={{ left: '3%',   top: '38%',  '--rot': '6deg',  animationDelay: '0.5s' }} />
+          <Key letter="E" color="#49c4a0" style={{ right: '3%',  top: '12%',  '--rot': '9deg',  animationDelay: '0.3s' }} />
+          <Key letter="W" color="#a78bfa" style={{ right: '1.5%',top: '38%',  '--rot': '-7deg', animationDelay: '0.8s' }} />
+          <div style={s.shell}>
           {loading && (
             <div style={{ textAlign: 'center', color: '#1a4a1a', fontWeight: 700, padding: 60 }}>
               Loading society…
@@ -651,6 +650,7 @@ const SocietyDetail = () => {
               </div>
             </>
           )}
+          </div>
         </div>
 
         {/* FOOTER */}

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../../context/useAuth'
 import { searchUsers } from '../../api/users'
@@ -61,7 +61,7 @@ const SocietyManage = () => {
     )
   )
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       setLoading(true); setError('')
       const [detail, memberList] = await Promise.all([getSociety(identifier), getSocietyMembers(identifier)])
@@ -72,9 +72,9 @@ const SocietyManage = () => {
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to load society management')
     } finally { setLoading(false) }
-  }
+  }, [identifier])
 
-  useEffect(() => { loadData() }, [identifier])
+  useEffect(() => { loadData() }, [loadData])
 
   useEffect(() => {
     let cancelled = false
@@ -204,8 +204,10 @@ const SocietyManage = () => {
       cursor: 'pointer', fontFamily: "'Nunito', sans-serif",
     },
     body: {
-      flex: 1, padding: '80px 20px 48px',
-      maxWidth: 820, margin: '0 auto', width: '100%', boxSizing: 'border-box',
+      flex: 1, position: 'relative', padding: '80px 20px 48px',
+    },
+    shell: {
+      maxWidth: 820, margin: '0 auto', width: '100%', boxSizing: 'border-box', position: 'relative', zIndex: 5,
     },
     footer: {
       textAlign: 'center', padding: 18, fontSize: '0.82rem',
@@ -373,18 +375,16 @@ const SocietyManage = () => {
           </div>
         </nav>
 
-        {/* Floating keys spell M-A-N-A-G-E */}
-        <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 1 }}>
-          <Key letter="M" color="#f4845f" style={{ left: '1.5%', top: '12%', '--rot': '-9deg' }} />
-          <Key letter="A" color="#f6c94e" style={{ left: '3%',   top: '38%', '--rot': '7deg',  animationDelay: '0.4s' }} />
-          <Key letter="N" color="#60c4f4" style={{ left: '1.5%', top: '64%', '--rot': '-5deg', animationDelay: '0.8s' }} />
-          <Key letter="A" color="#49c4a0" style={{ right: '3%',  top: '12%', '--rot': '8deg',  animationDelay: '0.2s' }} />
-          <Key letter="G" color="#a78bfa" style={{ right: '1.5%',top: '38%', '--rot': '-6deg', animationDelay: '0.6s' }} />
-          <Key letter="E" color="#f4845f" style={{ right: '3%',  top: '64%', '--rot': '5deg',  animationDelay: '1.0s' }} />
-        </div>
-
         {/* BODY */}
         <div style={s.body}>
+          {/* Floating keys spell M-A-N-A-G-E */}
+          <Key letter="M" color="#f4845f" style={{ left: '1.5%', top: '8%',  '--rot': '-9deg' }} />
+          <Key letter="A" color="#f6c94e" style={{ left: '3%',   top: '30%', '--rot': '7deg',  animationDelay: '0.4s' }} />
+          <Key letter="N" color="#60c4f4" style={{ left: '1.5%', top: '56%', '--rot': '-5deg', animationDelay: '0.8s' }} />
+          <Key letter="A" color="#49c4a0" style={{ right: '3%',  top: '8%',  '--rot': '8deg',  animationDelay: '0.2s' }} />
+          <Key letter="G" color="#a78bfa" style={{ right: '1.5%',top: '30%', '--rot': '-6deg', animationDelay: '0.6s' }} />
+          <Key letter="E" color="#f4845f" style={{ right: '3%',  top: '56%', '--rot': '5deg',  animationDelay: '1.0s' }} />
+          <div style={s.shell}>
           {loading && (
             <div style={{ textAlign: 'center', color: '#1a4a1a', fontWeight: 700, padding: 60 }}>
               Loading management page…
@@ -651,6 +651,7 @@ const SocietyManage = () => {
               )}
             </>
           )}
+          </div>
         </div>
 
         {/* FOOTER */}
