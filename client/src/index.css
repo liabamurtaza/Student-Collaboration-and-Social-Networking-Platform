@@ -16,6 +16,27 @@
   --heading: 'Trebuchet MS', 'Segoe UI', 'Avenir Next', sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
+  --bs-body-font-family: var(--sans);
+  --bs-body-color: var(--text);
+  --bs-body-bg: var(--bg);
+  --bs-primary: #1a4a1a;
+  --bs-primary-rgb: 26, 74, 26;
+  --bs-secondary: #6a8f4a;
+  --bs-secondary-rgb: 106, 143, 74;
+  --bs-success: #2e7d32;
+  --bs-success-rgb: 46, 125, 50;
+  --bs-info: #5b9af5;
+  --bs-warning: #f6c94e;
+  --bs-danger: #c62828;
+  --bs-border-color: var(--border);
+  --bs-card-bg: #f9faf4;
+  --bs-card-cap-bg: transparent;
+  --bs-card-border-radius: 1.25rem;
+  --bs-border-radius: 0.85rem;
+  --bs-border-radius-lg: 1.25rem;
+  --bs-border-radius-xl: 1.5rem;
+  --bs-box-shadow: var(--shadow);
+
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
   color-scheme: light dark;

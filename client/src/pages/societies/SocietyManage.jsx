@@ -11,6 +11,7 @@ import {
   updateSocietyMember
 } from '../../api/societies'
 import Avatar from '../../components/Avatar'
+import Navbar from '../../components/Navbar'
 import { getPrivilegeInfo, getPrivilegeLabel, getPrivilegeLevel, PRIVILEGE_GUIDE } from '../../utils/societyPrivileges'
 
 const privilegeLevels = ['member', 'moderator', 'admin']
@@ -355,32 +356,18 @@ const SocietyManage = () => {
       `}</style>
 
       <div style={s.page}>
-        {/* NAV */}
-        <nav style={s.nav} className="sm-nav">
-          <div style={s.navLeft}>
-            <Link to="/" style={s.logo}>★ UNIVERSE</Link>
-            <Link to="/feed"        style={s.navA} className="sm-navA">Feed</Link>
-            <Link to="/create-post" style={s.navA} className="sm-navA">Create Post</Link>
-            <Link to="/societies"   style={s.navA} className="sm-navA">Societies</Link>
-            <Link to="/explore"   style={s.navA} className="sm-navA">Explore</Link>
-            <Link to="/messages"  style={s.navA} className="sm-navA">Messages</Link>
-            <Link to="/settings"  style={s.navA} className="sm-navA">Settings</Link>
-            <Link to="/about"     style={s.navA} className="sm-navA">About</Link>
-            <Link to="/contact"   style={s.navA} className="sm-navA">Contact</Link>
-          </div>
-          <div style={s.navRight}>
-            {society && (
-              <Link to={`/societies/${society.society?.slug || society.society?._id}`} style={s.btnOutline}>
-                ← Back to society
-              </Link>
-            )}
-            <button style={s.btnFill} onClick={handleLogout}>Logout</button>
-          </div>
-        </nav>
+        <Navbar links={[
+          { to: '/feed', label: 'Feed' },
+          { to: '/create-post', label: 'Create Post' },
+          { to: '/societies', label: 'Societies' },
+          { to: '/explore', label: 'Explore' },
+          { to: '/messages', label: 'Messages' },
+          { to: '/settings', label: 'Settings' },
+          { to: '/about', label: 'About' },
+          { to: '/contact', label: 'Contact' },
+        ]} />
 
-        {/* BODY */}
         <div style={s.body}>
-          {/* Floating keys spell M-A-N-A-G-E */}
           <Key letter="M" color="#f4845f" style={{ left: '1.5%', top: '8%',  '--rot': '-9deg' }} />
           <Key letter="A" color="#f6c94e" style={{ left: '3%',   top: '30%', '--rot': '7deg',  animationDelay: '0.4s' }} />
           <Key letter="N" color="#60c4f4" style={{ left: '1.5%', top: '56%', '--rot': '-5deg', animationDelay: '0.8s' }} />
@@ -398,7 +385,6 @@ const SocietyManage = () => {
 
           {!loading && society && (
             <>
-              {/* HERO */}
               <div style={s.card}>
                 <div style={{ display: 'flex', gap: 18, alignItems: 'flex-start', flexWrap: 'wrap' }}>
                   <Avatar src={society.society.picture} name={society.society.name} size={72} />
@@ -427,7 +413,6 @@ const SocietyManage = () => {
                 <div style={s.errorBox}>⚠ You do not have permission to manage this society.</div>
               ) : (
                 <>
-                  {/* ACCESS POLICY */}
                   <div style={s.card}>
                     <div style={s.panelHeader}>
                       <div>
@@ -454,7 +439,6 @@ const SocietyManage = () => {
                     </div>
                   </div>
 
-                  {/* PRIVILEGE GUIDE */}
                   <div style={s.card}>
                     <div style={s.panelHeader}>
                       <div>
@@ -479,7 +463,6 @@ const SocietyManage = () => {
                     </div>
                   </div>
 
-                  {/* INVITE */}
                   <div style={s.card}>
                     <div style={s.panelHeader}>
                       <div>
@@ -545,7 +528,6 @@ const SocietyManage = () => {
                     </div>
                   </div>
 
-                  {/* ACTIVE MEMBERS */}
                   <div style={s.card}>
                     <div style={s.panelHeader}>
                       <div>
@@ -594,7 +576,6 @@ const SocietyManage = () => {
                     }
                   </div>
 
-                  {/* INVITED */}
                   {invitedMembers.length > 0 && (
                     <div style={s.card}>
                       <div style={s.panelHeader}>
@@ -622,7 +603,6 @@ const SocietyManage = () => {
                     </div>
                   )}
 
-                  {/* BANNED */}
                   <div style={s.card}>
                     <div style={s.panelHeader}>
                       <div>
@@ -657,7 +637,6 @@ const SocietyManage = () => {
           </div>
         </div>
 
-        {/* FOOTER */}
         <footer style={s.footer}>✦ UNIVERSE — made with ♥ ✦</footer>
       </div>
     </>

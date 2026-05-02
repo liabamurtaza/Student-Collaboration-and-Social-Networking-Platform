@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/useAuth'
+import Navbar from '../components/Navbar'
 import './About.css'
 
 const Key = ({ letter, color, style }) => (
@@ -26,28 +27,21 @@ const About = () => {
         rel="stylesheet"
       />
 
-      <div className="about-page">
+      <div className="about-page position-relative overflow-hidden d-flex flex-column">
         <div className="about-background" />
 
-        <nav className="about-nav">
-          <Link to="/" className="about-logo">★ UNIVERSE</Link>
-          <div className="about-nav-links">
-            {isLoggedIn ? (
-              <>
-                <Link to="/feed" className="about-nav-link">Feed</Link>
-                <Link to="/explore" className="about-nav-link">Explore</Link>
-                <Link to="/messages" className="about-nav-link">Messages</Link>
-                <Link to="/settings" className="about-nav-link">Settings</Link>
-                <Link to="/contact" className="about-nav-link">Contact</Link>
-              </>
-            ) : (
-              <>
-                <Link to="/login" className="about-nav-button">Log In</Link>
-                <Link to="/register" className="about-nav-outline">Sign Up</Link>
-              </>
-            )}
-          </div>
-        </nav>
+        <Navbar
+          links={isLoggedIn ? [
+            { to: '/feed', label: 'Feed' },
+            { to: '/explore', label: 'Explore' },
+            { to: '/messages', label: 'Messages' },
+            { to: '/settings', label: 'Settings' },
+            { to: '/contact', label: 'Contact' },
+          ] : [
+            { to: '/login', label: 'Log In' },
+            { to: '/register', label: 'Sign Up' },
+          ]}
+        />
 
         <div className="about-floating" aria-hidden="true">
           <Key letter="A" color="#f4845f" style={{ left: '1%', top: '22%' }} />
@@ -56,9 +50,9 @@ const About = () => {
           <Key letter="!" color="#49c4a0" style={{ right: '1%', top: '70%' }} />
         </div>
 
-        <main className="about-shell">
-          <section className="about-card">
-            <span className="about-badge">About</span>
+        <main className="about-shell container-xl flex-grow-1">
+          <section className="about-card card shadow-sm border-0">
+            <span className="about-badge badge rounded-pill text-uppercase">About</span>
             <h1>Built for campus collaboration</h1>
             <p>
               StudentNet is a shared space for posts, profiles, societies, and real-time messages.
@@ -68,24 +62,24 @@ const About = () => {
               The platform is designed to feel friendly and fast, so classmates can connect without
               losing the flow of their day.
             </p>
-            <div className="about-actions">
+            <div className="about-actions d-flex flex-wrap gap-2">
               {isLoggedIn ? (
                 <>
-                  <Link to="/feed" className="about-btn about-btn-primary">Open Feed</Link>
-                  <Link to="/societies" className="about-btn about-btn-outline">Browse Societies</Link>
+                  <Link to="/feed" className="about-btn about-btn-primary btn btn-success rounded-pill">Open Feed</Link>
+                  <Link to="/societies" className="about-btn about-btn-outline btn btn-outline-success rounded-pill">Browse Societies</Link>
                 </>
               ) : (
                 <>
-                  <Link to="/register" className="about-btn about-btn-primary">Create Account</Link>
-                  <Link to="/login" className="about-btn about-btn-outline">Log In</Link>
+                  <Link to="/register" className="about-btn about-btn-primary btn btn-success rounded-pill">Create Account</Link>
+                  <Link to="/login" className="about-btn about-btn-outline btn btn-outline-success rounded-pill">Log In</Link>
                 </>
               )}
             </div>
           </section>
 
-          <aside className="about-card about-card-alt">
+          <aside className="about-card about-card-alt card shadow-sm border-0">
             <h2>What you can do</h2>
-            <ul>
+            <ul className="list-group list-group-flush">
               <li>Share updates, projects, and campus wins.</li>
               <li>Discover societies and upcoming events.</li>
               <li>Message classmates instantly with live chat.</li>

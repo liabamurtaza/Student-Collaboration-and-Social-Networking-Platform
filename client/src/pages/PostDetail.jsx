@@ -5,6 +5,7 @@ import { getPostById, getPostLikes, likePost } from '../api/posts'
 import CommentSection from '../components/CommentSection'
 import Avatar from '../components/Avatar'
 import PostLikesModal from '../components/PostLikesModal'
+import Navbar from '../components/Navbar'
 import './Feed.css'
 import './PostDetail.css'
 
@@ -137,46 +138,33 @@ const PostDetail = () => {
   }
 
   return (
-    <div className="feed-page">
-      <nav style={s.nav}>
-        <div style={s.navLeft}>
-          <Link to="/" style={s.logo}>★ UNIVERSE</Link>
-          <Link to="/Feed" style={s.navA}>Feed</Link>
-          <Link to="/create-post" style={s.navA}>Create Post</Link>
-          <Link to="/societies" style={s.navA}>Societies</Link>
-          <Link to="/explore" style={s.navA}>Explore</Link>
-          <Link to="/messages" style={s.navA}>Messages</Link>
-          <Link to="/settings" style={s.navA}>Settings</Link>
-          <Link to="/about" style={s.navA}>About</Link>
-          <Link to="/contact" style={s.navA}>Contact</Link>
-        </div>
-        <div style={s.navRight}>
-          <button
-            onClick={() => navigate(`/profile/${currentUserId}`)}
-            disabled={!currentUserId}
-            style={s.btnOutline}
-          >
-            Profile
-          </button>
-          <button onClick={handleLogout} style={s.btnFill}>Logout</button>
-        </div>
-      </nav>
+    <div className="feed-page d-flex flex-column min-vh-100">
+      <Navbar links={[
+        { to: '/feed', label: 'Feed' },
+        { to: '/create-post', label: 'Create Post' },
+        { to: '/societies', label: 'Societies' },
+        { to: '/explore', label: 'Explore' },
+        { to: '/messages', label: 'Messages' },
+        { to: '/settings', label: 'Settings' },
+        { to: '/about', label: 'About' },
+        { to: '/contact', label: 'Contact' },
+      ]} />
 
-      <div className="feed-container post-detail-shell">
+      <div className="feed-container post-detail-shell container-lg flex-grow-1">
         <div className="post-detail-floating" aria-hidden="true">
           <span className="post-detail-key" style={{ '--rot': '-10deg', '--delay': '0s', left: '-18%', top: '18%', background: '#f4845f' }}>P</span>
           <span className="post-detail-key" style={{ '--rot': '8deg', '--delay': '0.3s', left: '-18%', top: '58%', background: '#f6c94e' }}>O</span>
           <span className="post-detail-key" style={{ '--rot': '12deg', '--delay': '0.5s', right: '-18%', top: '22%', background: '#49c4a0' }}>S</span>
           <span className="post-detail-key" style={{ '--rot': '-6deg', '--delay': '0.7s', right: '-18%', top: '62%', background: '#7bd9c7' }}>T</span>
         </div>
-        {loading && <div className="feed-status">Loading post...</div>}
-        {error && <div className="feed-status feed-error">{error}</div>}
+        {loading && <div className="feed-status alert alert-info text-center fw-semibold">Loading post...</div>}
+        {error && <div className="feed-status feed-error alert alert-danger">{error}</div>}
 
         {!loading && post && (
-          <article className="post-detail-card">
+          <article className="post-detail-card card shadow-sm border-0">
             <div className="post-detail-title-row">
               <h1 className="post-detail-title">Post</h1>
-              <Link to="/feed" className="post-detail-link">Back to feed</Link>
+              <Link to="/feed" className="post-detail-link btn btn-outline-success rounded-pill">Back to feed</Link>
             </div>
 
             <div className="post-detail-meta">
@@ -229,22 +217,22 @@ const PostDetail = () => {
               <p className="post-content">{post.content}</p>
             </div>
 
-            <div className="post-footer">
+            <div className="post-footer d-flex flex-wrap gap-2 align-items-center">
               <button
                 type="button"
                 onClick={handleLike}
-                className={`like-btn ${isLiked ? 'liked' : ''}`}
+                className={`like-btn btn btn-sm rounded-pill ${isLiked ? 'btn-success' : 'btn-outline-success'}`}
               >
                 {isLiked ? '♥' : '♡'} {likesCount}
               </button>
               <button
                 type="button"
                 onClick={handleOpenLikes}
-                className="post-like-count-btn"
+                className="post-like-count-btn btn btn-sm btn-outline-secondary rounded-pill"
               >
                 👥 {likesCount}
               </button>
-              <span className="post-comment-count">💬 {post.comments?.length || 0}</span>
+              <span className="post-comment-count badge rounded-pill text-bg-light text-body-secondary border">💬 {post.comments?.length || 0}</span>
             </div>
 
             <h2 className="post-detail-comments-title">Comments</h2>

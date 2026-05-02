@@ -1,6 +1,7 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useMemo } from 'react'
 import { useAuth } from '../../context/useAuth'
+import Navbar from '../../components/Navbar'
 
 const Key = ({ letter, color, style }) => (
   <div style={{
@@ -149,26 +150,18 @@ const SettingsLayout = ({ title, description, children }) => {
       `}</style>
 
       <div style={s.page}>
-        {/* ── NAV ── */}
-        <nav style={s.nav} className="sl-nav">
-          <div style={s.navLeft}>
-            <Link to="/" style={s.logo}>★ UNIVERSE</Link>
-            <Link to="/Feed"        style={s.navA} className="sl-navA">Feed</Link>
-            <Link to="/create-post" style={s.navA} className="sl-navA">Create Post</Link>
-            <Link to="/societies"   style={s.navA} className="sl-navA">Societies</Link>
-            <Link to="/explore"     style={s.navA} className="sl-navA">Explore</Link>
-            <Link to="/messages"    style={s.navA} className="sl-navA">Messages</Link>
-            <Link to="/settings"    style={s.navA} className="sl-navA">Settings</Link>
-            <Link to="/about"       style={s.navA} className="sl-navA">About</Link>
-            <Link to="/contact"     style={s.navA} className="sl-navA">Contact</Link>
-          </div>
-          <div style={s.navRight}>
-            <button style={s.btnOutline} onClick={() => navigate(`/profile/${currentUserId}`)} disabled={!currentUserId}>
-              Profile
-            </button>
-            <button style={s.btnFill} onClick={handleLogout}>Logout</button>
-          </div>
-        </nav>
+        <Navbar
+          links={[
+            { to: '/feed', label: 'Feed' },
+            { to: '/create-post', label: 'Create Post' },
+            { to: '/societies', label: 'Societies' },
+            { to: '/explore', label: 'Explore' },
+            { to: '/messages', label: 'Messages' },
+            { to: '/settings', label: 'Settings' },
+            { to: '/about', label: 'About' },
+            { to: '/contact', label: 'Contact' },
+          ]}
+        />
 
         {/* ── BODY ── position:relative so keys are anchored to the viewport area, same as Feed */}
         <div style={s.body}>

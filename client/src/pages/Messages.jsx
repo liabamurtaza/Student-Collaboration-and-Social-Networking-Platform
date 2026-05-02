@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import api from '../api/index'
 import { useAuth } from '../context/useAuth'
 import Avatar from '../components/Avatar'
+import Navbar from '../components/Navbar'
 import { formatDateTime } from '../utils/formatters'
 import './Feed.css'
 import './Profile.css'
@@ -154,25 +155,16 @@ const Messages = () => {
   if (loading) {
     return (
       <div className="feed-page">
-        <nav style={s.nav}>
-          <div style={s.navLeft}>
-            <Link to="/" style={s.logo}>★ UNIVERSE</Link>
-            <Link to="/Feed"        style={s.navA}>Feed</Link>
-            <Link to="/create-post" style={s.navA}>Create Post</Link>
-            <Link to="/societies"   style={s.navA}>Societies</Link>
-            <Link to="/explore"     style={s.navA}>Explore</Link>
-            <Link to="/messages"    style={s.navA}>Messages</Link>
-            <Link to="/settings"    style={s.navA}>Settings</Link>
-            <Link to="/about"       style={s.navA}>About</Link>
-            <Link to="/contact"     style={s.navA}>Contact</Link>
-          </div>
-          <div style={s.navRight}>
-            <button onClick={() => navigate(`/profile/${currentUserId}`)} disabled={!currentUserId} style={s.btnOutline}>
-              Profile
-            </button>
-            <button onClick={handleLogout} style={s.btnFill}>Logout</button>
-          </div>
-        </nav>
+        <Navbar links={[
+          { to: '/feed', label: 'Feed' },
+          { to: '/create-post', label: 'Create Post' },
+          { to: '/societies', label: 'Societies' },
+          { to: '/explore', label: 'Explore' },
+          { to: '/messages', label: 'Messages' },
+          { to: '/settings', label: 'Settings' },
+          { to: '/about', label: 'About' },
+          { to: '/contact', label: 'Contact' },
+        ]} />
         <div className="feed-container">
           <div className="feed-status">Loading messages...</div>
         </div>
@@ -182,26 +174,16 @@ const Messages = () => {
 
   return (
     <div className="feed-page">
-      <nav style={s.nav}>
-        <div style={s.navLeft}>
-          <Link to="/" style={s.logo}>★ UNIVERSE</Link>
-          <Link to="/Feed"        style={s.navA}>Feed</Link>
-          <Link to="/create-post" style={s.navA}>Create Post</Link>
-          <Link to="/societies"   style={s.navA}>Societies</Link>
-          <Link to="/explore"     style={s.navA}>Explore</Link>
-          <Link to="/messages"    style={s.navA}>Messages</Link>
-          <Link to="/settings"    style={s.navA}>Settings</Link>
-          <Link to="/about"       style={s.navA}>About</Link>
-          <Link to="/contact"     style={s.navA}>Contact</Link>
-        </div>
-        <div style={s.navRight}>
-          <button onClick={() => navigate(-1)} style={s.btnOutline}>Back</button>
-          <button onClick={() => navigate(`/profile/${currentUserId}`)} disabled={!currentUserId} style={s.btnOutline}>
-            Profile
-          </button>
-          <button onClick={handleLogout} style={s.btnFill}>Logout</button>
-        </div>
-      </nav>
+      <Navbar links={[
+        { to: '/feed', label: 'Feed' },
+        { to: '/create-post', label: 'Create Post' },
+        { to: '/societies', label: 'Societies' },
+        { to: '/explore', label: 'Explore' },
+        { to: '/messages', label: 'Messages' },
+        { to: '/settings', label: 'Settings' },
+        { to: '/about', label: 'About' },
+        { to: '/contact', label: 'Contact' },
+      ]} />
 
       <div className="feed-container messages-shell">
         <style>{`

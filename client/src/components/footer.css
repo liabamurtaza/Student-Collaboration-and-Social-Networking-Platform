@@ -3,7 +3,7 @@
 .footer {
   margin-top: auto;
   padding: 1.5rem;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid #dce8c0;
   text-align: center;
 }
 
@@ -17,13 +17,13 @@
 }
 
 .footer__brand {
-  font-family: var(--font-display);
+  font-family: 'Playfair Display', Georgia, serif;
   font-style: italic;
   font-size: 1.1rem;
-  color: var(--color-coral);
+  color: #2e7d32;
 }
 
 .footer__copy {
   font-size: 0.75rem;
-  color: var(--color-ink-light);
+  color: #6a8f4a;
 }

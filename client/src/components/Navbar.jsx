@@ -1,62 +1,111 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import './Navbar.css'
+import { useAuth } from '../context/useAuth'
 
-import './Navbar.css';
+const Navbar = ({
+	brand = '★ UNIVERSE',
+	brandTo = '/',
+	links = [],
+	rightContent = null,
+	className = '',
+	containerClassName = '',
+}) => {
+	const [isMenuOpen, setIsMenuOpen] = useState(false)
+	const { user, logout } = useAuth()
+	const navigate = useNavigate()
+	const isLoggedIn = Boolean(user?.token || localStorage.getItem('token'))
+	const currentUserId = (() => {
+		const token = user?.token || localStorage.getItem('token')
+		if (!token) return null
+		try {
+			return JSON.parse(atob(token.split('.')[1])).userId || null
+		} catch {
+			return null
+		}
+	})()
 
-function Navbar() {
+	useEffect(() => {
+		setIsMenuOpen(false)
+	}, [])
+
+	const defaultRightContent = isLoggedIn ? (
+		<>
+			<button
+				type="button"
+				className="app-navbar__action btn btn-outline-success rounded-pill"
+				onClick={() => currentUserId && navigate(`/profile/${currentUserId}`)}
+				disabled={!currentUserId}
+			>
+				Profile
+			</button>
+			<button
+				type="button"
+				className="app-navbar__action btn btn-success rounded-pill"
+				onClick={() => {
+					logout()
+					navigate('/login', { replace: true })
+				}}
+			>
+				Logout
+			</button>
+		</>
+	) : (
+		<>
+			<NavLink to="/login" className={({ isActive }) => `app-navbar__action btn btn-outline-success rounded-pill${isActive ? ' active' : ''}`}>
+				Log In
+			</NavLink>
+			<NavLink to="/register" className={({ isActive }) => `app-navbar__action btn btn-success rounded-pill${isActive ? ' active' : ''}`}>
+				Sign Up
+			</NavLink>
+		</>
+	)
+
+	const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+	const closeMenu = () => setIsMenuOpen(false)
+
 	return (
-		<header className="navbar" role="banner">
-			<div className="navbar__inner">
-				<div className="navbar__logo">Nexus</div>
+		<>
+			<nav className={`app-navbar navbar navbar-expand-lg ${className}`.trim()} role="navigation">
+				<div className={`app-navbar__inner container-fluid ${containerClassName}`.trim()}>
+					<Link to={brandTo} className="app-navbar__brand navbar-brand" onClick={closeMenu}>
+						{brand}
+					</Link>
 
-				<nav className="navbar__nav" aria-label="Primary">
-					<NavLink
-						to="/"
-						end
-						className={({ isActive }) =>
-							`navbar__link${isActive ? ' navbar__link--active' : ''}`
-						}
+					<button
+						className="app-navbar__toggle"
+						onClick={toggleMenu}
+						aria-label="Toggle navigation"
+						aria-expanded={isMenuOpen}
 					>
-						Home
-					</NavLink>
-					<NavLink
-						to="/profile"
-						className={({ isActive }) =>
-							`navbar__link${isActive ? ' navbar__link--active' : ''}`
-						}
-					>
-						Profile
-					</NavLink>
-					<NavLink
-						to="/messages"
-						className={({ isActive }) =>
-							`navbar__link${isActive ? ' navbar__link--active' : ''}`
-						}
-					>
-						Messages
-					</NavLink>
-				</nav>
+						<span className="app-navbar__toggle-icon" />
+						<span className="app-navbar__toggle-icon" />
+						<span className="app-navbar__toggle-icon" />
+					</button>
 
-				<div className="navbar__auth">
-					<NavLink
-						to="/login"
-						className={({ isActive }) =>
-							`navbar__auth-link${isActive ? ' navbar__link--active' : ''}`
-						}
-					>
-						Login
-					</NavLink>
-					<NavLink
-						to="/register"
-						className={({ isActive }) =>
-							`navbar__auth-link navbar__auth-link--cta${isActive ? ' navbar__link--active' : ''}`
-						}
-					>
-						Register
-					</NavLink>
+					<div className={`app-navbar__links ${isMenuOpen ? 'active' : ''}`}>
+						{links.map((link) => (
+							<NavLink
+								key={link.to}
+								to={link.to}
+								end={link.end}
+								className={({ isActive }) => `app-navbar__link btn btn-link text-decoration-none${isActive ? ' active' : ''}`}
+								onClick={closeMenu}
+							>
+								{link.label}
+							</NavLink>
+						))}
+					</div>
+
+					<div className={`app-navbar__actions ${isMenuOpen ? 'active' : ''}`}>
+						{rightContent || defaultRightContent}
+					</div>
 				</div>
-			</div>
-		</header>
-	);
+			</nav>
+
+			{isMenuOpen && <div className="app-navbar__overlay" onClick={closeMenu} />}
+		</>
+	)
 }
 
-export default Navbar;
+export default Navbar

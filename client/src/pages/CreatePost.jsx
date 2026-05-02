@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/useAuth'
 import { createPost } from '../api/posts'
+import Navbar from '../components/Navbar'
 
 const buildPlaceholder = (label, background, accent) => {
   const svg = `
@@ -231,39 +232,35 @@ const CreatePostPage = () => {
           .cp-preview { position: static !important; }
         }
         @media (max-width: 600px) {
+          .cp-shell { padding: 80px 10px 40px !important; }
+          .cp-card, .cp-preview { padding: 18px 14px !important; border-radius: 16px !important; }
           .cp-pgrid { grid-template-columns: 1fr !important; }
+          .cp-hero { margin-bottom: 20px !important; padding: 0 6px !important; }
+          .cp-hero-title { font-size: 1.6rem !important; }
         }
       `}</style>
 
       <div style={s.page}>
-        {/* ── NAV ── */}
-        <nav style={s.nav}>
-          <div style={s.navLeft}>
-            <Link to="/"            style={s.logo}>★ UNIVERSE</Link>
-            <Link to="/feed"        style={s.navA}>Feed</Link>
-            <Link to="/"            style={s.navA}>Create Post</Link>
-            <Link to="/societies"   style={s.navA}>Societies</Link>
-            <Link to="/explore"     style={s.navA}>Explore</Link>
-            <Link to="/messages"    style={s.navA}>Messages</Link>
-            <Link to="/settings"    style={s.navA}>Settings</Link>
-             <Link to="/about"      style={s.navA}>About</Link>
-             <Link to="/contact"    style={s.navA}>Contact</Link>
-          </div>
-          <div style={{ display:'flex', gap:8 }}>
-            <button style={s.btnOutline} onClick={() => navigate(-1)}>← Back</button>
-            <button style={s.btnFill}    onClick={() => { logout(); navigate('/login', { replace:true }) }}>Logout</button>
-          </div>
-        </nav>
+        <Navbar links={[
+          { to: '/feed', label: 'Feed' },
+          { to: '/create-post', label: 'Create Post' },
+          { to: '/societies', label: 'Societies' },
+          { to: '/explore', label: 'Explore' },
+          { to: '/messages', label: 'Messages' },
+          { to: '/settings', label: 'Settings' },
+          { to: '/about', label: 'About' },
+          { to: '/contact', label: 'Contact' },
+        ]} />
 
-        <div style={s.shell}>
+        <div className="cp-shell" style={s.shell}>
           {/* Floating key decorations */}
           <Key letter="C" color="#f4845f" style={{ left: -80, top: 60,  '--rot':'-10deg' }} />
           <Key letter="P" color="#f6c94e" style={{ left: -94, top: 140, '--rot':'8deg',  animationDelay:'0.5s' }} />
           <Key letter="+" color="#49c4a0" style={{ right:-10, top: 80,  '--rot':'10deg', animationDelay:'0.8s' }} />
 
           {/* Hero */}
-          <div style={s.hero}>
-            <h1 style={s.heroTitle}>Create a Post ✍️</h1>
+          <div className="cp-hero" style={s.hero}>
+            <h1 className="cp-hero-title" style={s.heroTitle}>Create a Post ✍️</h1>
             <p style={s.heroSub}>Share an update with the community, attach an image, or pick a placeholder visual.</p>
           </div>
 
@@ -271,7 +268,7 @@ const CreatePostPage = () => {
           <div style={s.layout} className="cp-layout">
 
             {/* ── LEFT: Form ── */}
-            <form style={s.card} onSubmit={handleSubmit}>
+            <form className="cp-card" style={s.card} onSubmit={handleSubmit}>
               <div style={s.sectionTitle}>Post details</div>
 
               {error   && <div style={s.errorBox}>⚠ {error}</div>}

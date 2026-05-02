@@ -388,4 +388,28 @@
 	.profile-stats {
 		grid-template-columns: 1fr;
 	}
+	
+	.profile-hero {
+		padding: 1.2rem 1.2rem;
+		border-radius: 16px;
+	}
+	
+	.profile-card,
+	.profile-posts-panel {
+		padding: 1.2rem 1rem 1rem;
+		border-radius: 16px;
+	}
+	
+	.profile-heading {
+		font-size: 1.8rem;
+	}
+	
+	.profile-actions-row {
+		flex-direction: column;
+	}
+	
+	.profile-btn {
+		width: 100%;
+		text-align: center;
+	}
 }

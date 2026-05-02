@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext.jsx'
 import ProtectedRoute from './utils/ProtectedRoute'
+import PageTransition from './components/PageTransition'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -29,6 +30,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
+        <PageTransition>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -55,6 +57,7 @@ function App() {
           <Route path="/settings/appearance" element={<ProtectedRoute><AppearanceSettings /></ProtectedRoute>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </PageTransition>
       </Router>
     </AuthProvider>
   )

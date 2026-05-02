@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import Navbar from '../components/Navbar'
 import './Home.css'
 
 const Key = ({ letter, color, style }) => (
@@ -37,18 +38,13 @@ const Home = () => {
         rel="stylesheet"
       />
 
-      <div className="home-page">
+      <div className="home-page position-relative overflow-hidden d-flex flex-column">
         <div className="home-background" />
 
-        <nav className="home-nav">
-          <Link to="/" className="home-logo">★ UNIVERSE</Link>
-          <div className="home-nav-links">
-            <Link to="/about" className="home-nav-link">About</Link>
-            <Link to="/contact" className="home-nav-link">Contact</Link>
-            <Link to="/login" className="home-nav-button">Log In</Link>
-            <Link to="/register" className="home-nav-outline">Sign Up</Link>
-          </div>
-        </nav>
+        <Navbar links={[
+          { to: '/about', label: 'About' },
+          { to: '/contact', label: 'Contact' },
+        ]} />
 
         <div className="home-floating" aria-hidden="true">
           <Key letter="H" color="#f4845f" style={{ left: '0.5%', top: '18%' }} />
@@ -57,9 +53,9 @@ const Home = () => {
           <Key letter="E" color="#49c4a0" style={{ right: '0.5%', top: '68%' }} />
         </div>
 
-        <main className="home-shell">
+        <main className="home-shell container-xl flex-grow-1">
           <section className="home-hero">
-            <div className="home-badge">Student Collaboration Platform</div>
+            <div className="home-badge badge rounded-pill text-uppercase">Student Collaboration Platform</div>
             <h1>UNIVERSE</h1>
             <p className="home-lead">
               A lightweight campus network for posts, messages, and class connections.
@@ -67,10 +63,10 @@ const Home = () => {
             </p>
 
             <div className="home-actions">
-              <Link to="/login" className="home-btn home-btn-primary">
+              <Link to="/login" className="home-btn home-btn-primary btn btn-success rounded-pill">
                 Login
               </Link>
-              <Link to="/register" className="home-btn home-btn-secondary">
+              <Link to="/register" className="home-btn home-btn-secondary btn btn-outline-success rounded-pill">
                 Register
               </Link>
             </div>
@@ -84,7 +80,7 @@ const Home = () => {
           </section>
 
           <aside className="home-showcase">
-            <div className="home-showcase-card home-showcase-main">
+            <div className="home-showcase-card home-showcase-main card shadow-sm border-0">
               <div className="home-showcase-topline">Live preview</div>
               <h2>Classmates, posts, and conversations in one place</h2>
               <p>
@@ -92,14 +88,14 @@ const Home = () => {
               </p>
 
               <div className="home-mock-feed">
-                <div className="home-mock-row">
+                <div className="home-mock-row d-flex align-items-center gap-3">
                   <div className="home-mock-avatar">A</div>
                   <div>
                     <strong>Alex</strong>
                     <span>shared a project update</span>
                   </div>
                 </div>
-                <div className="home-mock-row">
+                <div className="home-mock-row d-flex align-items-center gap-3">
                   <div className="home-mock-avatar home-mock-avatar-alt">M</div>
                   <div>
                     <strong>Mina</strong>
@@ -113,7 +109,7 @@ const Home = () => {
               {highlights.map((item, index) => (
                 <div
                   key={item.title}
-                  className={`home-showcase-card home-mini-card${index === 2 ? ' home-mini-card-wide' : ''}`}
+                  className={`home-showcase-card home-mini-card card shadow-sm border-0${index === 2 ? ' home-mini-card-wide' : ''}`}
                 >
                   <h3>{item.title}</h3>
                   <p>{item.text}</p>

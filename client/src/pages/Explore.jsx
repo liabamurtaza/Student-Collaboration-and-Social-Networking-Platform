@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import api from '../api/index'
 import { useAuth } from '../context/useAuth'
 import Avatar from '../components/Avatar'
+import Navbar from '../components/Navbar'
 
 const Key = ({ letter, color, style }) => (
   <div style={{
@@ -187,38 +188,31 @@ const Explore = () => {
         .ex-card:hover   { border-color:#43a047 !important; transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,0.09) !important; }
         .ex-view:hover   { background:#2e7d32 !important; }
         .ex-msg:hover    { background:#e8f5e0 !important; }
-        @media(max-width:640px){ .ex-navA{display:none !important;} .ex-nav{padding:0 16px !important;} }
+        @media(max-width:640px){ 
+          .ex-navA{display:none !important;} 
+          .ex-nav{padding:0 16px !important;} 
+          .ex-body { padding: 70px 10px 30px !important; }
+          .ex-search-card { padding: 20px 16px !important; border-radius: 16px !important; }
+          .ex-result-actions { flex-direction: column; width: 100%; margin-top: 10px; }
+          .ex-result-card { flex-direction: column; text-align: center; }
+          .ex-result-card .ex-view, .ex-result-card .ex-msg { width: 100%; text-align: center; }
+        }
       `}</style>
 
       <div style={s.page}>
-        {/* ── NAV ── */}
-        <nav style={s.nav} className="ex-nav">
-          <div style={s.navLeft}>
-            <Link to="/" style={s.logo}>★ UNIVERSE</Link>
-            <Link to="/Feed"        style={s.navA} className="ex-navA">Feed</Link>
-            <Link to="/create-post" style={s.navA} className="ex-navA">Create Post</Link>
-            <Link to="/societies"   style={s.navA} className="ex-navA">Societies</Link>
-            <Link to="/explore"     style={s.navA} className="ex-navA">Explore</Link>
-            <Link to="/messages"    style={s.navA} className="ex-navA">Messages</Link>
-            <Link to="/settings"    style={s.navA} className="ex-navA">Settings</Link>
-            <Link to="/about"       style={s.navA} className="ex-navA">About</Link>
-            <Link to="/contact"     style={s.navA} className="ex-navA">Contact</Link>
-			
-          </div>
-          <div style={s.navRight}>
-            <button
-              style={s.btnOutline}
-              onClick={() => currentUserId && navigate(`/profile/${currentUserId}`)}
-              disabled={!currentUserId}
-            >
-              Profile
-            </button>
-            <button style={s.btnFill} onClick={handleLogout}>Logout</button>
-          </div>
-        </nav>
+        <Navbar links={[
+          { to: '/feed', label: 'Feed' },
+          { to: '/create-post', label: 'Create Post' },
+          { to: '/societies', label: 'Societies' },
+          { to: '/explore', label: 'Explore' },
+          { to: '/messages', label: 'Messages' },
+          { to: '/settings', label: 'Settings' },
+          { to: '/about', label: 'About' },
+          { to: '/contact', label: 'Contact' },
+        ]} />
 
         {/* ── BODY ── */}
-        <div style={s.body}>
+        <div className="ex-body" style={s.body}>
           {/* Floating keys spell S-E-E-K */}
           <Key letter="S" color="#f4845f" style={{ left: '4%', top: '12%', '--rot': '-10deg' }} />
           <Key letter="E" color="#f6c94e" style={{ left: '7%', top: '42%', '--rot': '8deg',  animationDelay: '0.4s' }} />
@@ -229,7 +223,7 @@ const Explore = () => {
             <h1 style={s.heading}>Explore</h1>
             <p style={s.subheading}>Find classmates by name or username, then visit their profile.</p>
 
-            <div style={s.searchCard}>
+            <div className="ex-search-card" style={s.searchCard}>
               {/* Search input */}
               <div style={s.searchWrap}>
                 <span style={s.searchIcon}>🔍</span>
@@ -252,7 +246,7 @@ const Explore = () => {
               {!loading && results.length > 0 && (
                 <div style={s.resultsList}>
                   {results.map(person => (
-                    <div key={person._id} className="ex-card" style={s.resultCard}>
+                    <div key={person._id} className="ex-card ex-result-card" style={s.resultCard}>
                       <Avatar src={person.avatar} name={person.name || person.username} size={46} />
                       <div style={s.resultInfo}>
                         <span style={s.resultName}>{person.name || 'Student'}</span>
@@ -261,7 +255,7 @@ const Explore = () => {
                           <span style={s.resultDept}>{person.department}</span>
                         )}
                       </div>
-                      <div style={s.resultActions}>
+                      <div className="ex-result-actions" style={s.resultActions}>
                         <button
                           className="ex-view"
                           style={s.viewBtn}

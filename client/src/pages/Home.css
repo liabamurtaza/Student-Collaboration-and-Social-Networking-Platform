@@ -378,3 +378,41 @@
     padding-right: 0;
   }
 }
+
+/* ── Mobile Tweaks ── */
+@media (max-width: 600px) {
+  .home-nav {
+    padding: 0 16px;
+  }
+
+  .home-shell {
+    padding: 1rem 1rem 2rem;
+    gap: 1.2rem;
+  }
+
+  .home-hero h1 {
+    font-size: clamp(2.2rem, 12vw, 3.2rem);
+  }
+
+  .home-btn {
+    width: 100%;
+    padding: 0.8rem;
+  }
+
+  .home-actions {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .home-showcase-main {
+    padding: 1.2rem;
+  }
+
+  .home-mini-card {
+    padding: 1.2rem;
+  }
+
+  .home-showcase-main h2 {
+    font-size: 1.3rem;
+  }
+}

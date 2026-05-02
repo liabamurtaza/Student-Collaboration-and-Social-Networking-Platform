@@ -1,0 +1,49 @@
+/* ── Page Transition — 3 circular-headed beams ─────── */
+
+.page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.page-transition__beam {
+  position: absolute;
+  left: 0;
+  width: 250vw;
+  height: 37%;
+  border-radius: 50vh 0 0 50vh;
+  will-change: transform;
+  transform: translateX(100vw);
+}
+
+.page-transition__beam--1 {
+  top: -2%;
+  background: #1a4a1a;
+  animation: beamSweep 0.72s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation-delay: 0s;
+}
+
+.page-transition__beam--2 {
+  top: 31%;
+  background: #2e7d32;
+  animation: beamSweep 0.72s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation-delay: 0.07s;
+}
+
+.page-transition__beam--3 {
+  top: 64%;
+  background: #43a047;
+  animation: beamSweep 0.72s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation-delay: 0.14s;
+}
+
+@keyframes beamSweep {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(-260vw);
+  }
+}

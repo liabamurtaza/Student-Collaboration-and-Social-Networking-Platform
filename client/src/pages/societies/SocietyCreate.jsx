@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/useAuth'
 import { createSociety } from '../../api/societies'
+import Navbar from '../../components/Navbar'
 
 const Key = ({ letter, color, style }) => (
   <div style={{
@@ -186,31 +187,20 @@ const SocietyCreate = () => {
       `}</style>
 
       <div style={s.page}>
-        {/* ── NAV — identical to Feed / SocietiesHome ── */}
-        <nav style={s.nav} className="sc-nav">
-          <div style={s.navLeft}>
-            <Link to="/" style={s.logo}>★ UNIVERSE</Link>
-            <Link to="/feed"        style={s.navA} className="sc-navA">Feed</Link>
-            <Link to="/create-post" style={s.navA} className="sc-navA">Create Post</Link>
-            <Link to="/societies"   style={s.navA} className="sc-navA">Societies</Link>
-            <Link to="/explore"   style={s.navA} className="sc-navA">Explore</Link>
-            <Link to="/messages"  style={s.navA} className="sc-navA">Messages</Link>
-            <Link to="/settings"  style={s.navA} className="sc-navA">Settings</Link>
-            <Link to="/about"     style={s.navA} className="sc-navA">About</Link>
-            <Link to="/contact"   style={s.navA} className="sc-navA">Contact</Link>
-          </div>
-          <div style={s.navRight}>
-            <Link to="/societies" style={s.btnOutline}>← Back</Link>
-            <button style={s.btnFill} onClick={handleLogout}>Logout</button>
-          </div>
-        </nav>
+        <Navbar links={[
+          { to: '/feed', label: 'Feed' },
+          { to: '/create-post', label: 'Create Post' },
+          { to: '/societies', label: 'Societies' },
+          { to: '/explore', label: 'Explore' },
+          { to: '/messages', label: 'Messages' },
+          { to: '/settings', label: 'Settings' },
+          { to: '/about', label: 'About' },
+          { to: '/contact', label: 'Contact' },
+        ]} />
 
-        {/* ── BODY — keys spell N-E-W on the sides ── */}
         <div style={s.body}>
-          {/* Left: N E */}
           <Key letter="N" color="#f4845f" style={{ left:'4%', top:'14%', '--rot':'-10deg' }} />
           <Key letter="E" color="#f6c94e" style={{ left:'7%', top:'40%', '--rot':'8deg', animationDelay:'0.4s' }} />
-          {/* Right: W */}
           <Key letter="W" color="#49c4a0" style={{ right:'5%', top:'14%', '--rot':'10deg', animationDelay:'0.7s' }} />
 
           <div style={s.shell}>
@@ -221,7 +211,6 @@ const SocietyCreate = () => {
               {error && <div style={s.errorBox}>⚠ {error}</div>}
 
               <form onSubmit={handleSubmit}>
-                {/* Name */}
                 <div style={s.fieldWrap}>
                   <label style={s.label} htmlFor="sc-name">Society Name</label>
                   <input
@@ -231,7 +220,6 @@ const SocietyCreate = () => {
                   />
                 </div>
 
-                {/* Description */}
                 <div style={s.fieldWrap}>
                   <label style={s.label} htmlFor="sc-desc">Description</label>
                   <textarea
@@ -243,7 +231,6 @@ const SocietyCreate = () => {
 
                 <div style={s.divider} />
 
-                {/* Picture URL */}
                 <div style={s.fieldWrap}>
                   <label style={s.label} htmlFor="sc-pic">Picture URL</label>
                   <input
@@ -253,7 +240,6 @@ const SocietyCreate = () => {
                   />
                 </div>
 
-                {/* Upload */}
                 <div style={s.fieldWrap}>
                   <label style={s.label} htmlFor="sc-file">Upload Picture</label>
                   <input
@@ -262,7 +248,6 @@ const SocietyCreate = () => {
                   />
                 </div>
 
-                {/* Visibility */}
                 <div style={s.fieldWrap}>
                   <label style={s.label} htmlFor="sc-vis">Visibility</label>
                   <select
@@ -276,7 +261,6 @@ const SocietyCreate = () => {
 
                 <div style={s.divider} />
 
-                {/* Invite only toggle */}
                 <label style={s.toggleRow}>
                   <input
                     type="checkbox" style={s.checkbox}
@@ -290,7 +274,6 @@ const SocietyCreate = () => {
                   </div>
                 </label>
 
-                {/* Actions */}
                 <div style={s.actions}>
                   <button
                     type="submit" className="sc-submit" style={{
@@ -309,7 +292,6 @@ const SocietyCreate = () => {
           </div>
         </div>
 
-        {/* ── FOOTER — identical to Feed ── */}
         <footer style={s.footer}>✦ UNIVERSE — made with ♥ ✦</footer>
       </div>
     </>

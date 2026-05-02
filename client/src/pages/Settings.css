@@ -9,9 +9,9 @@
 .settings-card,
 .settings-panel,
 .settings-hero {
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
+  background: #f9faf4;
+  border: 1.5px solid #dce8c0;
+  border-radius: 16px;
 }
 
 .settings-sidebar {
@@ -25,26 +25,28 @@
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #6b7280;
+  color: #6a8f4a;
 }
 
 .settings-sidebar-link {
   display: block;
   padding: 0.75rem 0.8rem;
   border-radius: 10px;
-  color: #333;
+  color: #1a4a1a;
   text-decoration: none;
   margin-top: 0.3rem;
+  font-weight: 600;
+  transition: background 0.15s;
 }
 
 .settings-sidebar-link:hover {
-  background: #f5f7fb;
+  background: #e8f5e0;
 }
 
 .settings-sidebar-link.active {
-  background: #edf5ff;
-  color: #2a6fbb;
-  font-weight: 600;
+  background: rgba(67, 160, 71, 0.12);
+  color: #2e7d32;
+  font-weight: 700;
 }
 
 .settings-content {
@@ -57,7 +59,7 @@
 }
 
 .settings-hero p {
-  color: #666;
+  color: #5a7a3a;
   margin-top: 0.35rem;
   line-height: 1.5;
 }
@@ -77,26 +79,29 @@
 .settings-panel h3 {
   margin: 0 0 0.45rem;
   font-size: 1.05rem;
+  color: #1a4a1a;
 }
 
 .settings-card p,
 .settings-panel p,
 .settings-list-item,
 .settings-hint {
-  color: #666;
+  color: #5a7a3a;
   line-height: 1.5;
 }
 
 .settings-card-link {
   display: inline-flex;
   margin-top: 0.85rem;
-  color: #2a6fbb;
+  color: #2e7d32;
   text-decoration: none;
   font-weight: 600;
+  transition: color 0.15s;
 }
 
 .settings-card-link:hover {
   text-decoration: underline;
+  color: #1a4a1a;
 }
 
 .settings-form {
@@ -112,7 +117,7 @@
 .settings-field label,
 .settings-toggle-label {
   font-weight: 600;
-  color: #222;
+  color: #1a4a1a;
 }
 
 .settings-select,
@@ -120,12 +125,21 @@
 .settings-input {
   width: 100%;
   box-sizing: border-box;
-  border-radius: 8px;
-  border: 1px solid #d9dee5;
+  border-radius: 10px;
+  border: 2px solid #b5cc7a;
   padding: 0.7rem 0.8rem;
   font: inherit;
-  color: #222;
-  background: #fff;
+  color: #1a1a1a;
+  background: #f0f7f0;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.settings-select:focus,
+.settings-textarea:focus,
+.settings-input:focus {
+  border-color: #1a4a1a;
+  box-shadow: 0 0 0 3px rgba(26, 74, 26, 0.12);
 }
 
 .settings-textarea {
@@ -139,7 +153,7 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 0.85rem 0;
-  border-top: 1px solid #eef1f5;
+  border-top: 1px solid #dce8c0;
 }
 
 .settings-toggle-row:first-child {
@@ -153,7 +167,7 @@
 }
 
 .settings-toggle-copy span {
-  color: #666;
+  color: #5a7a3a;
   font-size: 0.9rem;
 }
 
@@ -161,11 +175,12 @@
   width: 46px;
   height: 28px;
   border-radius: 999px;
-  border: 1px solid #cfd7e3;
-  background: #dde3ea;
+  border: 1px solid #b5cc7a;
+  background: #d0deb0;
   position: relative;
   cursor: pointer;
   flex-shrink: 0;
+  transition: background 0.2s, border-color 0.2s;
 }
 
 .settings-switch::after {
@@ -182,8 +197,8 @@
 }
 
 .settings-switch.is-on {
-  background: #378add;
-  border-color: #378add;
+  background: #2e7d32;
+  border-color: #2e7d32;
 }
 
 .settings-switch.is-on::after {
@@ -197,48 +212,52 @@
 }
 
 .settings-btn {
-  border: 1px solid #d9dee5;
-  border-radius: 8px;
+  border: 2px solid #b5cc7a;
+  border-radius: 999px;
   padding: 0.7rem 1rem;
-  background: #fff;
-  color: #222;
+  background: #f9faf4;
+  color: #1a4a1a;
   cursor: pointer;
   font: inherit;
+  font-weight: 700;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.15s, border-color 0.15s;
 }
 
 .settings-btn:hover {
-  background: #f5f7fb;
+  background: #e8f5e0;
+  border-color: #43a047;
 }
 
 .settings-btn-primary {
-  background: #378add;
-  border-color: #378add;
+  background: #1a4a1a;
+  border-color: #1a4a1a;
   color: #fff;
 }
 
 .settings-btn-primary:hover {
-  background: #2a6fbb;
+  background: #2e7d32;
+  border-color: #2e7d32;
 }
 
 .settings-btn-danger {
-  border-color: #f0c6c6;
-  color: #b42318;
-  background: #fff7f7;
+  border-color: #f48fb1;
+  color: #c62828;
+  background: #ffeef0;
 }
 
 .settings-btn-danger:hover {
-  background: #ffecec;
+  background: #ffcdd2;
 }
 
 .settings-kv {
   display: grid;
   gap: 0.2rem;
   padding: 0.75rem 0;
-  border-top: 1px solid #eef1f5;
+  border-top: 1px solid #dce8c0;
 }
 
 .settings-kv:first-child {
@@ -247,12 +266,12 @@
 }
 
 .settings-kv strong {
-  color: #111;
+  color: #1a4a1a;
 }
 
 .settings-status {
   margin: 0;
-  color: #14853d;
+  color: #2e7d32;
   font-weight: 600;
 }
 

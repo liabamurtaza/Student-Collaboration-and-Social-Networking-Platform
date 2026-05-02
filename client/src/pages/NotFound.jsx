@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
+import Navbar from '../components/Navbar'
 
 const Key = ({ letter, color, style }) => (
 	<div
@@ -192,14 +193,10 @@ const NotFound = () => {
 			`}</style>
 
 			<div style={s.page}>
-				<nav style={s.nav}>
-					<Link to="/" style={s.logo}>★ UNIVERSE</Link>
-					<div style={s.navLinks}>
-						<Link to="/feed" style={s.navA}>Feed</Link>
-						<Link to="/explore" style={s.navA}>Explore</Link>
-						<button style={s.navBtn} onClick={() => navigate(-1)}>Go Back</button>
-					</div>
-				</nav>
+				<Navbar links={[
+					{ to: '/feed', label: 'Feed' },
+					{ to: '/explore', label: 'Explore' },
+				]} />
 
 				<div style={s.body}>
 					<Key letter="4" color="#f4845f" style={{ left: '7%', top: '15%' }} />

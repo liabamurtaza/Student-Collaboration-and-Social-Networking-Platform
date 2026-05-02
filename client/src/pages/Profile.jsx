@@ -5,6 +5,7 @@ import api from '../api/index'
 import FollowButton from '../components/FollowButton'
 import Avatar from '../components/Avatar'
 import PostCard from '../components/PostCard'
+import Navbar from '../components/Navbar'
 import './Feed.css'
 import './Profile.css'
 const s= {
@@ -242,27 +243,16 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <div className="feed-page">
-        <nav className="feed-nav">
-          <div className="feed-nav-left">
-            <span className="feed-logo">StudentNet</span>
-            <Link to="/feed" className="nav-link">Feed</Link>
-            <Link to="/societies" className="nav-link">Societies</Link>
-            <Link to="/explore" className="nav-link">Search</Link>
-            <Link to="/about" className="nav-link">About</Link>
-            <Link to="/contact" className="nav-link">Contact</Link>
-          </div>
-          <div className="feed-nav-right">
-            <button onClick={handleProfileClick} disabled={!currentUserId} className="nav-btn">
-              Profile
-            </button>
-            <button onClick={handleLogout} className="nav-btn nav-btn-logout">
-              Logout
-            </button>
-          </div>
-        </nav>
-        <div className="feed-container">
-          <div className="feed-status">Loading profile...</div>
+      <div className="feed-page d-flex flex-column min-vh-100">
+        <Navbar links={[
+          { to: '/feed', label: 'Feed' },
+          { to: '/societies', label: 'Societies' },
+          { to: '/explore', label: 'Search' },
+          { to: '/about', label: 'About' },
+          { to: '/contact', label: 'Contact' },
+        ]} />
+        <div className="feed-container container-lg flex-grow-1">
+          <div className="feed-status alert alert-info text-center fw-semibold">Loading profile...</div>
         </div>
       </div>
     )
@@ -276,32 +266,21 @@ const Profile = () => {
         rel="stylesheet"
       />
 
-      <div className="feed-page">
-      <nav className="feed-nav">
-        <div className="feed-nav-left">
-          <Link to="/" style={s.logo}>★ UNIVERSE</Link>
-            <Link to="/Feed" className="nav-link">Feed</Link>
-            <Link to="/create-post" className="nav-link">Create Post</Link>
-          <Link to="/societies" className="nav-link">Societies</Link>
-          <Link to="/explore" className="nav-link">Search</Link>
-          <Link to="/messages" className="nav-link">Messages</Link>
-          <Link to="/settings" className="nav-link">Settings</Link>
-          <Link to="/about" className="nav-link">About</Link>
-          <Link to="/contact" className="nav-link">Contact</Link>
-        </div>
-        <div className="feed-nav-right">
-          <button onClick={handleProfileClick} disabled={!currentUserId} className="nav-btn">
-            Profile
-          </button>
-          <button onClick={handleLogout} className="nav-btn nav-btn-logout">
-            Logout
-          </button>
-        </div>
-      </nav>
+      <div className="feed-page d-flex flex-column min-vh-100">
+      <Navbar links={[
+        { to: '/feed', label: 'Feed' },
+        { to: '/create-post', label: 'Create Post' },
+        { to: '/societies', label: 'Societies' },
+        { to: '/explore', label: 'Explore' },
+        { to: '/messages', label: 'Messages' },
+        { to: '/settings', label: 'Settings' },
+        { to: '/about', label: 'About' },
+        { to: '/contact', label: 'Contact' },
+      ]} />
 
-      <div className="feed-container profile-container">
+      <div className="feed-container profile-container container-lg flex-grow-1">
         {!profile ? (
-          <div className="feed-status feed-error">{error || 'User not found'}</div>
+          <div className="feed-status feed-error alert alert-danger">{error || 'User not found'}</div>
         ) : (
           <div className="profile-shell">
             <div className="profile-floating" aria-hidden="true">

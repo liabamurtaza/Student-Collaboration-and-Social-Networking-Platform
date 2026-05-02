@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { registerUser } from '../api/auth'
+import Navbar from '../components/Navbar'
 
 /* ── Floating letter key ── */
 const Key = ({ letter, color, border, style }) => (
@@ -299,26 +300,20 @@ const Register = () => {
           0%,100% { transform: translateY(0) rotate(var(--rot,0deg)); }
           50%      { transform: translateY(-7px) rotate(var(--rot,0deg)); }
         }
-        input::placeholder { color: #aaa; }
+        input::placeholder { color: #aaa; opacity: 1; }
         .divider-line { flex:1; height:1px; background:#ddd; }
       `}</style>
 
-      <div style={s.page}>
+      <div style={s.page} className="d-flex flex-column min-vh-100">
 
-        {/* ── NAV ── */}
-        <nav style={s.nav}>
-          <Link to="/" style={s.logo}>★ UNIVERSE</Link>
-          <div style={s.navLinks}>
-            <Link to="/"       style={s.navA}>Home</Link>
-            <Link to="/about"  style={s.navA}>About</Link>
-            <Link to="/contact" style={s.navA}>Contact</Link>
-            <Link to="/login"    style={s.btnOutline}>Log In</Link>
-            <Link to="/register" style={s.btnNavFill}>Sign Up</Link>
-          </div>
-        </nav>
+        <Navbar links={[
+          { to: '/', label: 'Home', end: true },
+          { to: '/about', label: 'About' },
+          { to: '/contact', label: 'Contact' },
+        ]} />
 
         {/* ── KEYS + FORM ── */}
-        <div style={s.body}>
+        <div style={s.body} className="flex-grow-1 position-relative d-flex align-items-center justify-content-center">
 
           {/* Left: U N I V */}
           <Key letter="U" color="#f4845f" style={{ left:'5%', top:'8%',  '--rot':'-10deg', animationDelay:'0s'   }} />
@@ -347,51 +342,51 @@ const Register = () => {
           ))}
 
           {/* ── CARD ── */}
-          <div style={s.card}>
+          <div style={s.card} className="card shadow-lg border-0 rounded-5">
             <div style={s.title}>Join UNIVERSE!</div>
             <div style={s.sub}>Connect. Collaborate. Create.</div>
 
             {/* Avatar */}
             <div style={s.avatar}>
-              <div style={s.avatarCircle}>
+              <div style={s.avatarCircle} className="rounded-circle border border-success d-flex align-items-center justify-content-center bg-success-subtle">
                 <svg width="44" height="44" viewBox="0 0 24 24" fill="#2e7d32">
                   <circle cx="12" cy="8" r="4"/>
                   <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
                 </svg>
               </div>
-              <span style={s.avatarLabel}>Upload photo</span>
+              <span style={s.avatarLabel} className="small text-success fw-semibold">Upload photo</span>
             </div>
 
             {/* Error */}
-            {error && <div style={s.error}>⚠ {error}</div>}
+            {error && <div style={s.error} className="alert alert-danger py-2 px-3">⚠ {error}</div>}
 
             {/* Form */}
             <form onSubmit={handleSubmit}>
               <div style={s.fieldWrap}>
-                <label style={s.label}>Name</label>
-                <input style={s.input} type="text" placeholder="Your full name"
+                <label style={s.label} className="form-label fw-semibold small">Name</label>
+                <input style={s.input} className="form-control" type="text" placeholder="Your full name"
                   value={name} onChange={e => setName(e.target.value)} />
               </div>
 
               <div style={s.fieldWrap}>
-                <label style={s.label}>Username</label>
-                <input style={s.input} type="text" placeholder="@username"
+                <label style={s.label} className="form-label fw-semibold small">Username</label>
+                <input style={s.input} className="form-control" type="text" placeholder="@username"
                   value={username} onChange={e => setUsername(e.target.value)} />
               </div>
 
               <div style={s.fieldWrap}>
-                <label style={s.label}>Email</label>
-                <input style={s.input} type="email" placeholder="your@email.com"
+                <label style={s.label} className="form-label fw-semibold small">Email</label>
+                <input style={s.input} className="form-control" type="email" placeholder="your@email.com"
                   value={email} onChange={e => setEmail(e.target.value)} />
               </div>
 
               <div style={s.fieldWrap}>
-                <label style={s.label}>Password</label>
+                <label style={s.label} className="form-label fw-semibold small">Password</label>
                 <div style={s.pwWrap}>
-                  <input style={s.pwInput} type={showPw ? 'text' : 'password'}
+                  <input style={s.pwInput} className="form-control pe-5" type={showPw ? 'text' : 'password'}
                     placeholder="Min 6 characters"
                     value={password} onChange={e => setPassword(e.target.value)} />
-                  <button type="button" style={s.pwBtn} onClick={() => setShowPw(p => !p)}>
+                  <button type="button" style={s.pwBtn} className="btn btn-link text-success p-0 position-absolute top-50 end-0 translate-middle-y me-3" onClick={() => setShowPw(p => !p)}>
                     {showPw ? '🙈' : '👁'}
                   </button>
                 </div>
@@ -401,27 +396,27 @@ const Register = () => {
                 ...s.btnPrimary,
                 opacity: loading ? 0.7 : 1,
                 cursor: loading ? 'not-allowed' : 'pointer',
-              }} disabled={loading}>
+              }} disabled={loading} className="btn btn-success w-100 rounded-pill fw-bold">
                 {loading ? 'Creating Account…' : 'Create Account →'}
               </button>
             </form>
 
-            <div style={s.divider}>
+            <div style={s.divider} className="d-flex align-items-center gap-2 my-3 text-secondary small fw-semibold">
               <div className="divider-line" />
               or
               <div className="divider-line" />
             </div>
 
-            <div style={s.loginLink}>
+            <div style={s.loginLink} className="small text-center mt-3">
               Already have an account?{' '}
-              <Link to="/login" style={{ color:'#1a4a1a', fontWeight:800, textDecoration:'none' }}>
+              <Link to="/login" style={{ color:'#1a4a1a', fontWeight:800, textDecoration:'none' }} className="link-success">
                 Log in here
               </Link>
             </div>
           </div>
         </div>
 
-        <footer style={s.footer}>✦ UNIVERSE — made with ♥ ✦</footer>
+        <footer style={s.footer} className="text-success fw-semibold">✦ UNIVERSE — made with ♥ ✦</footer>
       </div>
     </>
   )

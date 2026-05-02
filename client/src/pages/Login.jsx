@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { loginUser } from '../api/auth'
 import { useAuth } from '../context/useAuth'
+import Navbar from '../components/Navbar'
 
 const Key = ({ letter, color, style }) => (
   <div
@@ -256,25 +257,19 @@ const s = {
 
         input::placeholder {
           color:#aaa;
+          opacity: 1;
         }
       `}</style>
 
-      <div style={s.page}>
-        {/* NAVBAR */}
-        <nav style={s.nav}>
-          <Link to="/" style={s.logo}>★ UNIVERSE</Link>
-
-          <div style={s.navLinks}>
-            <Link to="/" style={s.navA}>Home</Link>
-            <Link to="/about" style={s.navA}>About</Link>
-            <Link to="/contact" style={s.navA}>Contact</Link>
-            <Link to="/login" style={s.btnFill}>Log In</Link>
-            <Link to="/register" style={s.btnOutline}>Sign Up</Link>
-          </div>
-        </nav>
+      <div style={s.page} className="d-flex flex-column min-vh-100">
+        <Navbar links={[
+          { to: '/', label: 'Home', end: true },
+          { to: '/about', label: 'About' },
+          { to: '/contact', label: 'Contact' },
+        ]} />
 
         {/* BODY */}
-        <div style={s.body}>
+        <div style={s.body} className="flex-grow-1 position-relative d-flex align-items-center justify-content-center">
           {/* floating blocks */}
           <Key letter="L" color="#f4845f" style={{ left:'6%', top:'12%' }} />
           <Key letter="O" color="#f6c94e" style={{ left:'10%', top:'35%' }} />
@@ -284,26 +279,27 @@ const s = {
           <Key letter="N" color="#49c4a0" style={{ right:'6%', top:'55%' }} />
 
           {/* LOGIN CARD */}
-          <div style={s.card}>
+          <div style={s.card} className="card shadow-lg border-0 rounded-5">
             <div style={s.title}>Welcome Back!</div>
             <div style={s.sub}>Log in to continue to UNIVERSE</div>
 
-            {error && <div style={s.error}>⚠ {error}</div>}
+            {error && <div style={s.error} className="alert alert-danger py-2 px-3">⚠ {error}</div>}
 
             <form onSubmit={handleSubmit}>
               <div style={s.fieldWrap}>
-                <label style={s.label}>Email</label>
+                <label style={s.label} className="form-label fw-semibold small">Email</label>
                 <input
                   type="email"
                   placeholder="your@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   style={s.input}
+                  className="form-control"
                 />
               </div>
 
               <div style={s.fieldWrap}>
-                <label style={s.label}>Password</label>
+                <label style={s.label} className="form-label fw-semibold small">Password</label>
 
                 <div style={s.pwWrap}>
                   <input
@@ -312,11 +308,13 @@ const s = {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     style={s.input}
+                    className="form-control pe-5"
                   />
 
                   <button
                     type="button"
                     style={s.pwBtn}
+                    className="btn btn-link text-success p-0 position-absolute top-50 end-0 translate-middle-y me-3"
                     onClick={() => setShowPw(!showPw)}
                   >
                     {showPw ? '🙈' : '👁'}
@@ -332,20 +330,18 @@ const s = {
                   opacity: loading ? 0.7 : 1,
                   cursor: loading ? 'not-allowed' : 'pointer',
                 }}
+                className="btn btn-success w-100 rounded-pill fw-bold"
               >
                 {loading ? 'Logging in...' : 'Login →'}
               </button>
             </form>
 
-            <div style={s.registerLink}>
+            <div style={s.registerLink} className="small text-center mt-3">
               Don’t have an account?{' '}
               <Link
                 to="/register"
-                style={{
-                  color: '#1a4a1a',
-                  fontWeight: 800,
-                  textDecoration: 'none',
-                }}
+                style={{ color: '#1a4a1a', fontWeight: 800, textDecoration: 'none' }}
+                className="link-success"
               >
                 Register here
               </Link>
@@ -353,7 +349,7 @@ const s = {
           </div>
         </div>
 
-        <footer style={s.footer}>✦ UNIVERSE — made with ♥ ✦</footer>
+        <footer style={s.footer} className="text-success fw-semibold">✦ UNIVERSE — made with ♥ ✦</footer>
       </div>
     </>
   )

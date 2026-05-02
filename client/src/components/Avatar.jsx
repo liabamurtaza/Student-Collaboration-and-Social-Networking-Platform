@@ -1,6 +1,7 @@
 const Avatar = ({ src, name = '', alt, size = 44, className = '' }) => {
 	const label = alt || name || 'User avatar'
 	const fallback = (name || 'U').trim().charAt(0).toUpperCase()
+	const resolvedClassName = `${className} rounded-circle`.trim()
 
 	const avatarStyle = {
 		width: size,
@@ -17,11 +18,11 @@ const Avatar = ({ src, name = '', alt, size = 44, className = '' }) => {
 	}
 
 	if (src) {
-		return <img src={src} alt={label} className={className} style={avatarStyle} />
+		return <img src={src} alt={label} className={resolvedClassName} style={avatarStyle} />
 	}
 
 	return (
-		<div aria-label={label} className={className} style={avatarStyle}>
+		<div aria-label={label} className={`${resolvedClassName} d-inline-flex align-items-center justify-content-center`} style={avatarStyle}>
 			{fallback}
 		</div>
 	)

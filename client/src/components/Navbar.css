@@ -1,87 +1,311 @@
-/* client/src/components/Navbar.css */
+/* ── Navbar ─────────────────────────────────────────── */
 
-.navbar {
+.app-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(247, 243, 238, 0.94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(26, 74, 26, 0.12);
+}
+
+.app-navbar__inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  height: 54px;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.app-navbar__brand {
+  font-family: var(--heading);
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--bs-primary);
+  letter-spacing: -0.03em;
+  flex-shrink: 0;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.app-navbar__brand:hover {
+  color: var(--bs-primary);
+}
+
+/* ── Hamburger Toggle (mobile only) ────────────────── */
+
+.app-navbar__toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 0.25rem;
+  flex-shrink: 0;
+}
+
+.app-navbar__toggle-icon {
+  width: 22px;
+  height: 2px;
+  background: var(--bs-primary);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+/* ── Mobile Sidebar Drawer ─────────────────────────── */
+
+.app-navbar__links {
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 260px;
+  max-width: 75vw;
+  height: 100vh;
+  height: 100dvh;
+  background: rgba(247, 243, 238, 0.98);
+  backdrop-filter: blur(10px);
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 4.5rem 1rem 5rem;
+  border-left: 1px solid rgba(26, 74, 26, 0.12);
+  overflow-y: auto;
+  z-index: 999;
+  box-sizing: border-box;
+  transform: translateX(100%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.app-navbar__links.active {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.app-navbar__link {
+  color: var(--bs-primary);
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: block;
+  transition: color 0.2s ease, background 0.15s ease;
+  white-space: nowrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.app-navbar__link:hover,
+.app-navbar__link.active {
+  color: var(--bs-success);
+  background: rgba(46, 125, 50, 0.06);
+}
+
+/* ── Mobile Action Buttons (bottom of drawer) ──────── */
+
+.app-navbar__actions {
+  display: flex;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 260px;
+  max-width: 75vw;
+  padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  background: rgba(247, 243, 238, 0.98);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(26, 74, 26, 0.12);
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: stretch;
+  z-index: 1000;
+  box-sizing: border-box;
+  transform: translateX(100%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.app-navbar__actions.active {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.app-navbar__action {
+  font-weight: 700;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  border-radius: 6px;
+  flex: 1 1 0;
+  text-align: center;
+  min-width: 0;
+}
+
+.app-navbar__action.active {
+  border-color: var(--bs-success);
+}
+
+/* ── Overlay ───────────────────────────────────────── */
+
+.app-navbar__overlay {
+  display: block;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
-  height: var(--navbar-height);
-  background: rgba(247, 243, 238, 0.92);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--color-border);
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 500;
+  animation: navFadeIn 0.2s ease;
 }
 
-.navbar__inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  height: 100%;
-  padding: 0 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+@keyframes navFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
-.navbar__logo {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 600;
-  font-style: italic;
-  color: var(--color-coral);
-  flex-shrink: 0;
+/* ── Tablet+ (768px) ── Horizontal navbar ──────────── */
+
+@media (min-width: 768px) {
+  .app-navbar__inner {
+    height: 54px;
+    padding: 0 1.25rem;
+    justify-content: flex-start;
+    gap: 1.5rem;
+  }
+
+  .app-navbar__brand {
+    font-size: 1.15rem;
+    margin-right: auto;
+  }
+
+  .app-navbar__toggle {
+    display: none;
+  }
+
+  .app-navbar__links {
+    display: flex;
+    position: static;
+    top: auto;
+    right: auto;
+    width: auto;
+    max-width: none;
+    height: auto;
+    background: none;
+    backdrop-filter: none;
+    flex-direction: row;
+    gap: 0.25rem;
+    padding: 0;
+    border-left: none;
+    overflow: visible;
+    z-index: auto;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: none;
+  }
+
+  .app-navbar__link {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.85rem;
+    border-radius: 999px;
+    flex: 0 1 auto;
+    width: auto;
+    white-space: nowrap;
+  }
+
+  .app-navbar__actions {
+    display: flex;
+    position: static;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    width: auto;
+    max-width: none;
+    background: none;
+    backdrop-filter: none;
+    border-top: none;
+    gap: 0.5rem;
+    flex-direction: row;
+    padding: 0;
+    align-items: center;
+    justify-content: flex-end;
+    z-index: auto;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: none;
+  }
+
+  .app-navbar__action {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .app-navbar__overlay {
+    display: none;
+  }
 }
 
-.navbar__nav {
-  display: flex;
-  gap: 0.25rem;
-  flex: 1;
+/* ── Desktop (1024px+) ─────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .app-navbar__inner {
+    padding: 0 1.25rem;
+    gap: 1.5rem;
+  }
+
+  .app-navbar__brand {
+    font-size: 1.2rem;
+  }
+
+  .app-navbar__link {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .app-navbar__action {
+    padding: 0.45rem 0.9rem;
+    font-size: 0.9rem;
+  }
 }
 
-.navbar__link {
-  padding: 0.35rem 0.75rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--color-ink-mid);
-  transition: color 0.15s, background 0.15s;
-}
+/* ── Large Desktop (1440px+) ───────────────────────── */
 
-.navbar__link:hover {
-  color: var(--color-ink-dark);
-  background: rgba(216, 90, 48, 0.08);
-}
+@media (min-width: 1440px) {
+  .app-navbar__link {
+    font-size: 0.95rem;
+  }
 
-.navbar__link--active {
-  color: var(--color-coral);
-}
-
-.navbar__auth {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.navbar__auth-link {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--color-ink-mid);
-  padding: 0.35rem 0.75rem;
-  border-radius: var(--radius-full);
-  transition: color 0.15s;
-}
-
-.navbar__auth-link:hover {
-  color: var(--color-coral);
-}
-
-.navbar__auth-link--cta {
-  background: var(--color-coral);
-  color: #fff;
-  padding: 0.4rem 1rem;
-}
-
-.navbar__auth-link--cta:hover {
-  background: var(--color-coral-hover);
-  color: #fff;
+  .app-navbar__action {
+    font-size: 0.95rem;
+  }
 }

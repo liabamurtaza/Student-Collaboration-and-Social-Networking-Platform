@@ -109,7 +109,7 @@ const PostCard = ({ post, currentUserId, onDelete, onUpdate }) => {
 
   return (
     <div
-      className="post-card post-card-clickable"
+      className="post-card post-card-clickable card shadow-sm border-0 mb-3"
       onClick={openPost}
       role="button"
       tabIndex={0}
@@ -122,17 +122,17 @@ const PostCard = ({ post, currentUserId, onDelete, onUpdate }) => {
     >
 
       {/* Author and date */}
-      <div className="post-header">
-        <div className="post-author-wrap" onClick={stopCardNavigation}>
+      <div className="post-header card-header bg-transparent d-flex justify-content-between align-items-start gap-3 border-0 px-0 pt-0">
+        <div className="post-author-wrap d-flex align-items-center gap-2 flex-grow-1" onClick={stopCardNavigation}>
           <Avatar
             src={post.societyId?.picture || post.userId?.avatar}
             name={societyName || authorName}
             size={34}
-            className="post-avatar"
+            className="post-avatar flex-shrink-0"
           />
-          <div className="post-author-copy">
+          <div className="post-author-copy d-grid gap-1">
             {hasSocietyContext ? (
-              <strong className="post-author">
+              <strong className="post-author d-inline-flex align-items-center gap-1">
                 <Link to={`/societies/${societySlug || post.societyId?._id}`} className="profile-link-inline">
                   {societyName}
                 </Link>
@@ -150,7 +150,7 @@ const PostCard = ({ post, currentUserId, onDelete, onUpdate }) => {
             )}
 
             {hasSocietyContext && (
-              <span className="post-author-subtitle">
+              <span className="post-author-subtitle text-body-secondary small">
                 by {post.userId?._id ? (
                   <Link to={`/profile/${post.userId._id}`} className="profile-link-inline">
                     {authorName}
@@ -162,81 +162,81 @@ const PostCard = ({ post, currentUserId, onDelete, onUpdate }) => {
             )}
           </div>
         </div>
-        <span className="post-date">
+        <span className="post-date text-body-secondary small text-nowrap">
           {new Date(post.createdAt).toLocaleDateString()}
         </span>
       </div>
 
       {/* Content */}
       {editing ? (
-        <textarea
+          <textarea
           value={editContent}
           onChange={(e) => setEditContent(e.target.value)}
           rows={3}
-          className="post-edit-textarea"
+            className="post-edit-textarea form-control"
           onClick={stopCardNavigation}
         />
       ) : (
-        <div className="post-body-link">
+        <div className="post-body-link card-body px-0 pt-0 pb-0">
           {post.graphic && (
-            <div className="post-graphic-wrap">
+            <div className="post-graphic-wrap mb-3">
               <img
                 src={post.graphic}
                 alt="Attached to post"
-                className="post-graphic"
+                className="post-graphic img-fluid rounded-4"
                 loading="lazy"
               />
             </div>
           )}
-          <p className="post-content">{post.content}</p>
+          <p className="post-content mb-0">{post.content}</p>
         </div>
       )}
       {error && <p className="post-error">{error}</p>}
 
       {/* Bottom row */}
-      <div className="post-footer">
+      <div className="post-footer card-footer bg-transparent border-0 px-0 pb-0 d-grid gap-3">
 
         {/* Like button */}
-        <div className="post-social-bar" onClick={stopCardNavigation}>
+        <div className="post-social-bar d-flex flex-wrap align-items-center gap-2" onClick={stopCardNavigation}>
           <button
             type="button"
             onClick={handleLike}
-            className={`like-btn ${isLiked ? 'liked' : ''}`}
+            className={`like-btn btn btn-sm rounded-pill ${isLiked ? 'btn-success' : 'btn-outline-success'}`}
           >
             {isLiked ? '♥' : '♡'} {likesCount}
           </button>
           <button
             type="button"
             onClick={handleOpenLikes}
-            className="post-like-count-btn"
+            className="post-like-count-btn btn btn-sm btn-outline-secondary rounded-pill"
           >
             👥 {likesCount}
           </button>
-          <span className="post-comment-count">💬 {post.comments?.length || 0}</span>
+          <span className="post-comment-count badge rounded-pill text-bg-light text-body-secondary border">💬 {post.comments?.length || 0}</span>
         </div>
 
         {/* Edit / Delete — only on your own posts */}
         {isMyPost && (
-          <div className="post-actions" onClick={stopCardNavigation}>
+          <div className="post-actions d-flex flex-wrap gap-2 justify-content-end" onClick={stopCardNavigation}>
             {editing ? (
               <>
-                <button onClick={handleEdit} disabled={loading} className="btn-save">
+                <button onClick={handleEdit} disabled={loading} className="btn-save btn btn-primary btn-sm rounded-pill px-3">
                   {loading ? 'Saving...' : 'Save'}
                 </button>
                 <button
                   onClick={() => { setEditing(false); setEditContent(post.content) }}
                   disabled={loading}
-                  className="btn-cancel"
+                  className="btn-cancel btn btn-outline-secondary btn-sm rounded-pill px-3"
                 >
                   Cancel
                 </button>
               </>
             ) : (
               <>
-                <button onClick={() => setEditing(true)} className="btn-edit">
+                <button onClick={() => setEditing(true)} className="btn-edit btn btn-outline-secondary btn-sm rounded-pill px-3">
                   Edit
                 </button>
-                <button onClick={handleDelete} disabled={loading} className="btn-delete">
+                <button onClick={handleDelete} disabled={loading} className="btn-delete btn btn-outline-danger btn-sm rounded-pill px-3">
                   {loading ? 'Deleting...' : 'Delete'}
                 </button>
               </>

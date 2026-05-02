@@ -4,6 +4,7 @@ import { useAuth } from '../context/useAuth'
 import CreatePostForm from '../components/CreatePostForm'
 import Avatar from '../components/Avatar'
 import PostCard from '../components/PostCard'
+import Navbar from '../components/Navbar'
 import api from '../api/index'
 import './Feed.css'
 
@@ -179,32 +180,20 @@ const Feed = () => {
         .sug-tile:hover { transform: translateY(-4px); border-color: #1a4a1a !important; }
       `}</style>
 
-      <div style={s.page}>
-        {/* ── NAV (matches Register style) ── */}
-        <nav style={s.nav}>
-          <div style={s.navLeft}>
-            <Link to="/" style={s.logo}>★ UNIVERSE</Link>
-            <Link to="/Feed" style={s.navA}>Feed</Link>
-            <Link to="/create-post" style={s.navA}>Create Post</Link>
-            <Link to="/societies"   style={s.navA}>Societies</Link>
-            <Link to="/explore"     style={s.navA}>Explore</Link>
-            <Link to="/messages"    style={s.navA}>Messages</Link>
-            <Link to="/settings"    style={s.navA}>Settings</Link>
-            <Link to="/about"       style={s.navA}>About</Link>
-            <Link to="/contact"     style={s.navA}>Contact</Link>
-          </div>
-          <div style={s.navRight}>
-            <button style={s.btnOutline} onClick={() => navigate(`/profile/${currentUserId}`)}>
-              Profile
-            </button>
-            <button style={s.btnFill} onClick={() => { logout(); navigate('/login', { replace: true }) }}>
-              Logout
-            </button>
-          </div>
-        </nav>
+      <div style={s.page} className="d-flex flex-column min-vh-100">
+        <Navbar links={[
+          { to: '/feed', label: 'Feed' },
+          { to: '/create-post', label: 'Create Post' },
+          { to: '/societies', label: 'Societies' },
+          { to: '/explore', label: 'Explore' },
+          { to: '/messages', label: 'Messages' },
+          { to: '/settings', label: 'Settings' },
+          { to: '/about', label: 'About' },
+          { to: '/contact', label: 'Contact' },
+        ]} />
 
         {/* ── BODY ── */}
-        <div style={s.body}>
+        <div style={s.body} className="flex-grow-1 d-flex justify-content-center position-relative">
           {/* Floating keys */}
           <Key letter="M" color="#f4845f" style={{ left:'4%', top:'12%', '--rot':'-10deg' }} />
           <Key letter="Y" color="#f6c94e" style={{ left:'7%', top:'38%', '--rot':'8deg', animationDelay:'0.4s' }} />
@@ -213,9 +202,9 @@ const Feed = () => {
           <Key letter="E" color="#b16ae8" style={{ right:'4%', top:'52%', '--rot':'6deg', animationDelay:'0.3s' }} />
           <Key letter="D" color="#5b9af5" style={{ right:'7%', top:'74%', '--rot':'-12deg', animationDelay:'0.9s' }} />
 
-          <div style={s.center}>
+          <div style={s.center} className="w-100 position-relative">
             {/* Feed toggle */}
-            <div style={{ display:'flex', background:'#f9faf4', border:'2.5px solid #1a4a1a', borderRadius:18, padding:6, marginBottom:24 }}>
+            <div style={{ display:'flex', background:'#f9faf4', border:'2.5px solid #1a4a1a', borderRadius:18, padding:6, marginBottom:24 }} className="btn-group w-100 shadow-sm">
               {['all','smart'].map(mode => (
                 <button key={mode} onClick={() => setFeedMode(mode)} style={{
                   flex:1, padding:12, borderRadius:14, border:'none', fontWeight:800,
@@ -223,7 +212,7 @@ const Feed = () => {
                   background: feedMode === mode ? '#1a4a1a' : 'transparent',
                   color: feedMode === mode ? '#fff' : '#1a4a1a',
                   transition: 'all 0.2s',
-                }}>
+                }} className={`btn fw-bold ${feedMode === mode ? 'btn-success' : 'btn-outline-success'}`}>
                   {mode === 'all' ? 'All Posts' : 'My Feed'}
                 </button>
               ))}
@@ -233,18 +222,18 @@ const Feed = () => {
 
             {/* ── SUGGESTIONS CAROUSEL ── */}
             {currentUserId && (
-              <div style={s.sugCard}>
-                <div style={s.sugTitle}>👥 Suggested People</div>
+              <div style={s.sugCard} className="card shadow-sm border-0 mb-4">
+                <div style={s.sugTitle} className="fw-bold">👥 Suggested People</div>
                 <div style={s.sugSub}>Discover classmates to follow</div>
 
-                {suggestionsLoading && <p style={{ color:'#6a8f4a', fontWeight:700, fontSize:'0.85rem' }}>Loading suggestions…</p>}
+                {suggestionsLoading && <p style={{ color:'#6a8f4a', fontWeight:700, fontSize:'0.85rem' }} className="text-secondary fw-semibold mb-0">Loading suggestions…</p>}
 
                 {!suggestionsLoading && suggestedUsers.length > 0 && (
                   <div style={s.carouselWrap}>
                     {/* Duplicate list for seamless infinite scroll */}
                     <div className="carousel-track" style={s.carouselTrack} ref={carouselRef}>
                       {[...suggestedUsers, ...suggestedUsers].map((person, i) => (
-                        <div key={`${person._id}-${i}`} className="sug-tile" style={s.tile}>
+                        <div key={`${person._id}-${i}`} className="sug-tile card shadow-sm" style={s.tile}>
                           <Avatar src={person.avatar} name={person.name || person.username} size={52}
                             style={{ border:'3px solid #43a047', borderRadius:'50%' }} />
                           <div style={s.tileName}>{person.name}</div>
@@ -257,11 +246,11 @@ const Feed = () => {
                           <div style={s.tileBtns}>
                             <button style={person.isFollowing
                               ? { ...s.followBtn, background:'#43a047' }
-                              : s.followBtn}
+                              : s.followBtn} className={`btn btn-sm rounded-pill ${person.isFollowing ? 'btn-success' : 'btn-success'}`}
                               onClick={() => handleFollowSuggestion(person._id)}>
                               {person.isFollowing ? '✓ Following' : 'Follow'}
                             </button>
-                            <button style={s.viewBtn} onClick={() => navigate(`/profile/${person._id}`)}>
+                            <button style={s.viewBtn} className="btn btn-sm btn-outline-success rounded-pill" onClick={() => navigate(`/profile/${person._id}`)}>
                               View
                             </button>
                           </div>
@@ -273,8 +262,8 @@ const Feed = () => {
               </div>
             )}
 
-            {loading && <div style={{ textAlign:'center', color:'#6a8f4a', fontWeight:700, padding:20 }}>Loading posts…</div>}
-            {error   && <div style={{ background:'#ffeef0', border:'1.5px solid #f48fb1', borderRadius:12, padding:'12px 16px', color:'#c62828', fontWeight:700 }}>{error}</div>}
+            {loading && <div style={{ textAlign:'center', color:'#6a8f4a', fontWeight:700, padding:20 }} className="alert alert-info text-center fw-semibold">Loading posts…</div>}
+            {error   && <div style={{ background:'#ffeef0', border:'1.5px solid #f48fb1', borderRadius:12, padding:'12px 16px', color:'#c62828', fontWeight:700 }} className="alert alert-danger">{error}</div>}
 
             {posts.map(post => (
               <PostCard key={post._id} post={post} currentUserId={currentUserId}
@@ -285,7 +274,7 @@ const Feed = () => {
           </div>
         </div>
 
-        <footer style={s.footer}>✦ UNIVERSE — made with ♥ ✦</footer>
+        <footer style={s.footer} className="text-success fw-semibold">✦ UNIVERSE — made with ♥ ✦</footer>
       </div>
     </>
   )

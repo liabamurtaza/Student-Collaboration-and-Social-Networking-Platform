@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/useAuth'
+import Navbar from '../components/Navbar'
 import './Contact.css'
 
 const Key = ({ letter, color, style }) => (
@@ -26,28 +27,19 @@ const Contact = () => {
         rel="stylesheet"
       />
 
-      <div className="contact-page">
+      <div className="contact-page position-relative overflow-hidden d-flex flex-column">
         <div className="contact-background" />
 
-        <nav className="contact-nav">
-          <Link to="/" className="contact-logo">★ UNIVERSE</Link>
-          <div className="contact-nav-links">
-            {isLoggedIn ? (
-              <>
-                <Link to="/feed" className="contact-nav-link">Feed</Link>
-                <Link to="/explore" className="contact-nav-link">Explore</Link>
-                <Link to="/messages" className="contact-nav-link">Messages</Link>
-                <Link to="/settings" className="contact-nav-link">Settings</Link>
-                <Link to="/about" className="contact-nav-link">About</Link>
-              </>
-            ) : (
-              <>
-                <Link to="/login" className="contact-nav-button">Log In</Link>
-                <Link to="/register" className="contact-nav-outline">Sign Up</Link>
-              </>
-            )}
-          </div>
-        </nav>
+        <Navbar links={isLoggedIn ? [
+          { to: '/feed', label: 'Feed' },
+          { to: '/explore', label: 'Explore' },
+          { to: '/messages', label: 'Messages' },
+          { to: '/settings', label: 'Settings' },
+          { to: '/about', label: 'About' },
+        ] : [
+          { to: '/login', label: 'Log In' },
+          { to: '/register', label: 'Sign Up' },
+        ]} />
 
         <div className="contact-floating" aria-hidden="true">
           <Key letter="C" color="#f4845f" style={{ left: '1%', top: '20%' }} />
@@ -56,15 +48,15 @@ const Contact = () => {
           <Key letter="?" color="#49c4a0" style={{ right: '1%', top: '68%' }} />
         </div>
 
-        <main className="contact-shell">
-          <section className="contact-card">
-            <span className="contact-badge">Contact</span>
+        <main className="contact-shell container-xl flex-grow-1">
+          <section className="contact-card card shadow-sm border-0">
+            <span className="contact-badge badge rounded-pill text-uppercase">Contact</span>
             <h1>Let us know what you need</h1>
             <p>
               Have feedback or questions about StudentNet? Send a note and we will help.
             </p>
 
-            <div className="contact-details">
+            <div className="contact-details d-grid gap-3">
               <div>
                 <span>Email</span>
                 <strong>support@studentnet.edu</strong>
@@ -80,19 +72,19 @@ const Contact = () => {
             </div>
           </section>
 
-          <aside className="contact-card contact-card-alt">
+          <aside className="contact-card contact-card-alt card shadow-sm border-0">
             <h2>Quick links</h2>
             <p>Need to jump back in quickly? These will help.</p>
-            <div className="contact-actions">
+            <div className="contact-actions d-flex flex-wrap gap-2">
               {isLoggedIn ? (
                 <>
-                  <Link to="/feed" className="contact-btn contact-btn-primary">Open Feed</Link>
-                  <Link to="/messages" className="contact-btn contact-btn-outline">Open Messages</Link>
+                  <Link to="/feed" className="contact-btn contact-btn-primary btn btn-success rounded-pill">Open Feed</Link>
+                  <Link to="/messages" className="contact-btn contact-btn-outline btn btn-outline-success rounded-pill">Open Messages</Link>
                 </>
               ) : (
                 <>
-                  <Link to="/register" className="contact-btn contact-btn-primary">Create Account</Link>
-                  <Link to="/login" className="contact-btn contact-btn-outline">Log In</Link>
+                  <Link to="/register" className="contact-btn contact-btn-primary btn btn-success rounded-pill">Create Account</Link>
+                  <Link to="/login" className="contact-btn contact-btn-outline btn btn-outline-success rounded-pill">Log In</Link>
                 </>
               )}
             </div>

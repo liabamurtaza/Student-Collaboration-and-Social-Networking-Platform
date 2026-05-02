@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/useAuth'
+import Navbar from '../../components/Navbar'
 import { getMySocieties, getSocietiesFeed } from '../../api/societies'
 import { getPrivilegeLabel } from '../../utils/societyPrivileges'
 
@@ -191,24 +192,16 @@ const SocietiesHome = () => {
       `}</style>
 
       <div style={s.page}>
-        {/* ── NAV — identical to Feed ── */}
-        <nav style={s.nav} className="soc-nav">
-          <div style={s.navLeft}>
-            <Link to="/" style={s.logo}>★ UNIVERSE</Link>
-            <Link to="/feed"        style={s.navA} className="soc-nava">Feed</Link>
-            <Link to="/create-post" style={s.navA} className="soc-nava">Create Post</Link>
-            <Link to="/societies"   style={s.navA} className="soc-nava">Societies</Link>
-            <Link to="/explore"     style={s.navA} className="soc-nava">Explore</Link>
-            <Link to="/messages"    style={s.navA} className="soc-nava">Messages</Link>
-            <Link to="/settings"    style={s.navA} className="soc-nava">Settings</Link>
-            <Link to="/about"       style={s.navA} className="soc-nava">About</Link>
-            <Link to="/contact"     style={s.navA} className="soc-nava">Contact</Link>
-          </div>
-          <div style={s.navRight}>
-            <Link to="/societies/new" style={s.btnOutline}>+ New Society</Link>
-            <button style={s.btnFill} onClick={handleLogout}>Logout</button>
-          </div>
-        </nav>
+        <Navbar links={[
+          { to: '/feed', label: 'Feed' },
+          { to: '/create-post', label: 'Create Post' },
+          { to: '/societies', label: 'Societies' },
+          { to: '/explore', label: 'Explore' },
+          { to: '/messages', label: 'Messages' },
+          { to: '/settings', label: 'Settings' },
+          { to: '/about', label: 'About' },
+          { to: '/contact', label: 'Contact' },
+        ]} />
 
         {/* ── BODY with keys spelling J-O-I-N on the sides ── */}
         <div style={s.body}>
