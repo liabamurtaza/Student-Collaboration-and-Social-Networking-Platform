@@ -223,7 +223,7 @@ const Feed = () => {
             {/* ── SUGGESTIONS CAROUSEL ── */}
             {currentUserId && (
               <div style={s.sugCard} className="card shadow-sm border-0 mb-4">
-                <div style={s.sugTitle} className="fw-bold">👥 Suggested People</div>
+                <div style={s.sugTitle} className="fw-bold"> Suggested People</div>
                 <div style={s.sugSub}>Discover classmates to follow</div>
 
                 {suggestionsLoading && <p style={{ color:'#6a8f4a', fontWeight:700, fontSize:'0.85rem' }} className="text-secondary fw-semibold mb-0">Loading suggestions…</p>}

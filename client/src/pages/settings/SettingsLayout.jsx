@@ -17,11 +17,11 @@ const Key = ({ letter, color, style }) => (
 )
 
 const sectionLinks = [
-  { to: '/settings',               label: 'Overview',      icon: '🏠', end: true },
-  { to: '/settings/account',       label: 'Account',       icon: '👤' },
-  { to: '/settings/notifications',  label: 'Notifications', icon: '🔔' },
-  { to: '/settings/privacy',        label: 'Privacy',       icon: '🔒' },
-  { to: '/settings/appearance',     label: 'Appearance',    icon: '🎨' },
+  { to: '/settings',               label: 'Overview',       end: true },
+  { to: '/settings/account',       label: 'Account',       },
+  { to: '/settings/notifications',  label: 'Notifications', },
+  { to: '/settings/privacy',        label: 'Privacy',       },
+  { to: '/settings/appearance',     label: 'Appearance',    },
 ]
 
 const SettingsLayout = ({ title, description, children }) => {

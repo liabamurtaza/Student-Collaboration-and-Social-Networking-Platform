@@ -76,7 +76,6 @@ const NotificationsSettings = () => {
       `}</style>
 
       <div style={s.card}>
-        <span style={s.cardIcon}>🧭</span>
         <h3 style={s.cardTitle}>Notification controls</h3>
 
         <div className="ns-toggle-row">

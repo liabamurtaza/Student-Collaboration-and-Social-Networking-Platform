@@ -47,12 +47,11 @@ const AccountSettings = () => {
       <style>{`.as-link:hover { text-decoration: underline; }`}</style>
 
       <div style={s.card}>
-        <span style={s.cardIcon}>🔐</span>
         <h3 style={s.cardTitle}>Session</h3>
 
         <div style={s.rowFirst}>
           <span style={s.rowKey}>Session status</span>
-          <span style={s.rowVal}>🟢 {sessionSummary}</span>
+          <span style={s.rowVal}> {sessionSummary}</span>
         </div>
         <div style={s.row}>
           <span style={s.rowKey}>Local identity</span>

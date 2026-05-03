@@ -4,25 +4,21 @@ import SettingsLayout from './SettingsLayout'
 const cards = [
   {
     to: '/settings/account',
-    icon: '👤',
     title: 'Account',
     body: 'Review your profile identity, active session, and sign-out controls.',
   },
   {
     to: '/settings/notifications',
-    icon: '🔔',
     title: 'Notifications',
     body: 'Tune message alerts, digest timing, and in-app notification preferences.',
   },
   {
     to: '/settings/privacy',
-    icon: '🔒',
     title: 'Privacy',
     body: 'Decide who can reach you, see your presence, and view your profile.',
   },
   {
     to: '/settings/appearance',
-    icon: '🎨',
     title: 'Appearance',
     body: 'Adjust theme, density, and motion preferences for the UI.',
   },

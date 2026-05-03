@@ -163,7 +163,6 @@ const PrivacySettings = () => {
       `}</style>
 
       <div style={s.card}>
-        <span style={s.cardIcon}>🛡️</span>
         <h3 style={s.cardTitle}>Privacy controls</h3>
         {saved && <p className="ps-status">Saved</p>}
         {saveError && <p className="ps-error">{saveError}</p>}

@@ -81,7 +81,6 @@ const AppearanceSettings = () => {
       `}</style>
 
       <div style={s.card}>
-        <span style={s.cardIcon}>🧩</span>
         <h3 style={s.cardTitle}>Appearance controls</h3>
 
         <div style={s.rowFirst}>

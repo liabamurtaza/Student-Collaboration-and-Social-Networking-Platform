@@ -288,7 +288,6 @@ const Explore = () => {
               {/* Initial state */}
               {!query.trim() && (
                 <div style={s.emptyState}>
-                  <div style={s.emptyIcon}>👥</div>
                   <p style={s.emptyText}>Search for someone to get started</p>
                   <p style={s.emptyHint}>Type a name or @username above</p>
                 </div>

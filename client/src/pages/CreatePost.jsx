@@ -260,7 +260,7 @@ const CreatePostPage = () => {
 
           {/* Hero */}
           <div className="cp-hero" style={s.hero}>
-            <h1 className="cp-hero-title" style={s.heroTitle}>Create a Post ✍️</h1>
+            <h1 className="cp-hero-title" style={s.heroTitle}>Create a Post </h1>
             <p style={s.heroSub}>Share an update with the community, attach an image, or pick a placeholder visual.</p>
           </div>
 
@@ -321,7 +321,7 @@ const CreatePostPage = () => {
 
             {/* ── RIGHT: Preview ── */}
             <aside style={s.preview} className="cp-preview">
-              <div style={s.sectionTitle}>Live preview 👁</div>
+              <div style={s.sectionTitle}>Live preview </div>
               <div style={s.previewImgWrap}>
                 <img src={previewGraphic} alt="Preview"
                   style={{ display:'block', width:'100%', maxHeight:260, objectFit:'cover' }} />
@@ -331,7 +331,7 @@ const CreatePostPage = () => {
                 {content || 'Write something to preview your post here…'}
               </div>
               <div style={s.previewNote}>
-                📤 Uploaded images go to Cloudinary. Placeholder visuals are saved directly as the post graphic.
+                 Uploaded images go to Cloudinary. Placeholder visuals are saved directly as the post graphic.
               </div>
             </aside>
           </div>
